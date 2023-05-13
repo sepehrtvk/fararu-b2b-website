@@ -1,13 +1,25 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: "yekanBakh";
+  font-weight: light;
+  src: local("yekanBakh"),
+    url("./assets/fonts/YekanBakh/Fa/Yekan\ Bakh\ FA\ 03\ Light.woff")
+      format("woff");
+}
+@font-face {
+  font-family: "yekanBakh";
+  font-weight: normal;
+  src: local("yekanBakh"),
+    url("./assets/fonts/YekanBakh/Fa/Yekan\ Bakh\ FA\ 04\ Regular.woff")
+      format("woff");
+}
+@font-face {
+  font-family: "yekanBakh";
+  font-weight: bold;
+  src: local("yekanBakh"),
+    url("./assets/fonts/YekanBakh/Fa/Yekan\ Bakh\ FA\ 06\ Bold.woff")
+      format("woff");
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: "yekanBakh";
 }
