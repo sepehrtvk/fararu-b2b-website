@@ -4,6 +4,7 @@ import { requestCode, loginByCode, getUserInfo } from "../../api/user";
 import styles from "./Login.module.css";
 import { finalize } from "rxjs";
 import { CodeResponse } from "../../api/user/types";
+import notifyToast from "../../components/toast/toast";
 
 const Login = () => {
   const [data, setData] = useState({
@@ -39,7 +40,7 @@ const Login = () => {
   };
   const submitHandler = (event: any) => {
     event.preventDefault();
-    setIsLoading(true);
+    // setIsLoading(true);
 
     if (step == "phone") {
       if (errors.phone) {

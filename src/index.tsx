@@ -10,6 +10,8 @@ import { Provider } from "react-redux";
 // *****Import here the configuration file*****
 import "../src/i18n/i18n";
 import { BrowserRouter } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.min.css";
+import { ToastContainer } from "react-toastify";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -19,6 +21,7 @@ root.render(
     <Provider store={store}>
       <BrowserRouter>
         <App />
+        <ToastContainer />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>
