@@ -37,8 +37,8 @@ export class Api {
       ...headers,
       Language: "fa",
       Accept: "*/*",
-      "Accept-Encoding": "gzip, deflate, br",
-      Connection: "keep-alive",
+      // "Accept-Encoding": "gzip, deflate, br",
+      // Connection: "keep-alive",
       "x-requested-with": "XMLHttpRequest",
     };
   }
