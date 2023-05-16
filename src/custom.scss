@@ -5,5 +5,14 @@ $theme-colors: (
   "primary": #323ac9,
   "danger": #ff4136,
 );
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1340px,
+  xxl: 1520px,
+);
+
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";

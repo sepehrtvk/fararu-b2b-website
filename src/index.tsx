@@ -12,15 +12,21 @@ import "../src/i18n/i18n";
 import { BrowserRouter } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer } from "react-toastify";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
+let persistor = persistStore(store);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <PersistGate persistor={persistor}>
+          <App />
+        </PersistGate>
         <ToastContainer />
       </BrowserRouter>
     </Provider>

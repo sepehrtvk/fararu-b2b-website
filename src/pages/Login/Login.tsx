@@ -5,8 +5,15 @@ import styles from "./Login.module.css";
 import { finalize } from "rxjs";
 import { CodeResponse } from "../../api/user/types";
 import notifyToast from "../../components/toast/toast";
+import { useTranslation } from "react-i18next";
+import { clearError, loginByCodeStart } from "../../store/slices/user";
+import { clearCustomer } from "../../store/slices/customer";
+import { deleteBasket } from "../../store/slices/basket";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { getProducts } from "../../api/product";
 
 const Login = () => {
+  const { t } = useTranslation();
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -14,6 +21,17 @@ const Login = () => {
   });
   const [errors, setErrors] = useState<any>({});
   const [error, setError] = useState<string | null>(null);
+  const loginError = useAppSelector((store) => store.user.loginError);
+
+  useEffect(() => {
+    if (loginError) notifyToast("error", { message: loginError });
+  }, [loginError]);
+
+  useEffect(() => {
+    getProducts().subscribe((res) => {
+      console.log(res);
+    });
+  }, []);
 
   const [touch, setTouch] = useState({
     email: false,
@@ -23,10 +41,7 @@ const Login = () => {
   const [step, setStep] = useState("phone");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // setErrors(validate(data, "login"));
-  }, [data]);
+  const dispatch = useAppDispatch();
 
   const changeHandler = (event: any) => {
     if (event.target.name === "isAccepted") {
@@ -40,12 +55,10 @@ const Login = () => {
   };
   const submitHandler = (event: any) => {
     event.preventDefault();
-    // setIsLoading(true);
+    setIsLoading(true);
 
     if (step == "phone") {
       if (errors.phone) {
-        setIsLoading(false);
-
         setTouch({
           email: true,
           password: true,
@@ -58,12 +71,26 @@ const Login = () => {
         .subscribe({
           next: (result: CodeResponse) => {
             if (result.alreadyExist) setStep("code");
-            else setError("ddddddddd");
+            else {
+              notifyToast("error", {
+                message: t("mobile_number_is_not_registered"),
+              });
+              setError(t("mobile_number_is_not_registered"));
+            }
           },
           error: (err: Error) => {
+            notifyToast("error", { message: err.message });
             setError(err.message);
           },
         });
+    } else {
+      dispatch(clearError());
+      dispatch(clearCustomer());
+      if (data.phone) {
+        dispatch(deleteBasket());
+        dispatch(clearCustomer());
+        dispatch(loginByCodeStart({ mobile: data.phone, code: data.password }));
+      }
     }
   };
   return (
@@ -123,7 +150,6 @@ const Login = () => {
           </div>
         </form>
       )}
-      {/* <ToastContainer /> */}
     </div>
   );
 };

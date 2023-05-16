@@ -1,0 +1,17 @@
+.image {
+  max-width: 100%;
+  width: 500px;
+  max-height: 250px;
+  border-radius: 10px;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .image {
+    margin-top: 1rem;
+  }
+}
+
+.border {
+  border-bottom: 2px solid #eee;
+}

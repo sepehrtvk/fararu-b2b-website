@@ -1,0 +1,252 @@
+.header {
+  padding: 1rem 0;
+  box-shadow: 0 5px 20px rgba(120, 120, 120, 0.2);
+}
+
+.container {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.topheader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.hamburger {
+  display: none;
+}
+
+.hamburger img,
+.hamburgerOpen img {
+  width: 30px;
+  cursor: pointer;
+}
+
+.logo {
+  flex: 0 0 15%;
+}
+
+.search {
+  flex: 0 0 50%;
+  position: relative;
+  background-color: #e9e9e9;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.search input {
+  width: 90%;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  font-size: 1rem;
+  color: #666;
+}
+
+.search button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.search img {
+  width: 16px;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+}
+
+.buttons a {
+  position: relative;
+  padding: 10px;
+  color: #666;
+}
+
+.buttons a::before {
+  position: absolute;
+  content: "";
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 10%;
+  background-color: #5463ff;
+  opacity: 0.16;
+  border-radius: 30px 0 0 30px;
+  transition: all 0.3s ease-in;
+}
+
+.buttons a:hover::before {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.buttons .cart {
+  display: flex;
+  margin-right: 10px;
+  align-items: center;
+  position: relative;
+}
+
+.buttons .cart img {
+  width: 16px;
+  margin-right: 5px;
+}
+
+.itemCounter {
+  position: absolute;
+  top: -5px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #fa4c4c;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  font-family: iranyekan;
+}
+
+.border {
+  border: 1px solid rgba(232, 232, 232, 0.651);
+  margin: 10px 0;
+}
+
+.bottomheader {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.navitem:not(:last-child) {
+  margin-left: 3rem;
+}
+
+.navitem a {
+  padding: 5px 10px;
+  color: #666;
+  font-size: 1rem;
+  transition: all 0.3s ease-in-out;
+  border-bottom: 2px solid #fff;
+  text-decoration: none;
+}
+
+.navitem a:hover {
+  border-bottom: 2px solid #5463ff;
+  color: #5463ff;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    width: 980px;
+  }
+}
+
+@media (max-width: 990px) {
+  .container {
+    padding: 0 2rem;
+    width: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .logo {
+    text-align: left;
+    flex: 0 0 100%;
+  }
+  .hamburger {
+    display: block;
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    z-index: 300;
+  }
+
+  .hamburgerOpen {
+    display: block;
+    position: fixed;
+    top: 1rem;
+    right: 2rem;
+    z-index: 300;
+  }
+
+  .buttons a {
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .open img {
+    width: 30px;
+  }
+
+  .navbar {
+    position: fixed;
+    top: 0;
+    right: -100%;
+  }
+
+  .navbaropen {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: #5463ff;
+    height: 100vh;
+    z-index: 200;
+    flex-direction: column;
+    align-items: center;
+    width: 280px;
+    padding: 4rem 1rem 0;
+    transition: right 0.3s ease;
+  }
+
+  .navitem:not(:last-child) {
+    margin-left: 0;
+    margin-bottom: 3rem;
+  }
+
+  .navitem {
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+  }
+
+  .navitem:hover {
+    background-color: #fff;
+    border-radius: 10px;
+  }
+
+  .navitem a {
+    border: none;
+    color: #fff;
+  }
+
+  .navitem:hover a {
+    border: none;
+    color: #5463ff;
+  }
+}
+
+@media (max-width: 560px) {
+  .container {
+    padding: 0 10px;
+  }
+  .search {
+    flex: 0 048%;
+  }
+}
