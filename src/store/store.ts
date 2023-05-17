@@ -1,21 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { epicMiddleware, rootEpic } from "./epics";
 import persistedReducer from "./slices";
-import {
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from "redux-persist";
-
-// const customMiddle = (getDefaultMiddleware) =>
-//   getDefaultMiddleware({
-//     serializableCheck: {
-//       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-//     },
-//   });
 
 export const store = configureStore({
   reducer: persistedReducer,

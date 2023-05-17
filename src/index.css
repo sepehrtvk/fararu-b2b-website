@@ -20,6 +20,26 @@
       format("woff");
 }
 
-body {
+* {
   font-family: "yekanBakh";
+}
+.carousel-slider {
+  margin-top: 6rem;
+}
+
+.carousel-slider .swiper-button-prev::after,
+.carousel-slider .swiper-button-next::after {
+  color: #666;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 10px 18px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 3px 10px rgba(120, 120, 120, 0.2);
+  transition: all 0.3s ease;
+}
+
+.textJustify {
+  text-align: justify;
+  line-height: 1.8rem;
 }

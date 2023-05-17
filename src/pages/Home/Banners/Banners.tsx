@@ -27,7 +27,7 @@ const Banners = () => {
 
   return (
     <Swiper
-      className='slider'
+      className='slider mb-5'
       modules={[Autoplay, Navigation, Pagination]}
       spaceBetween={0}
       slidesPerView={1}

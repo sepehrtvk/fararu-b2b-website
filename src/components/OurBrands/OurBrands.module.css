@@ -1,0 +1,26 @@
+.brands {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.image {
+  flex: 0 0 25%;
+  cursor: pointer;
+  text-align: center;
+}
+
+.brands .image img {
+  width: 100px;
+}
+
+@media (max-width: 768px) {
+  .image {
+    flex: 0 0 50%;
+    margin-bottom: 1rem;
+  }
+  .brands img {
+    width: 50px;
+  }
+}

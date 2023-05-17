@@ -1,9 +1,10 @@
 // Override default variables before the import
-$body-bg: #ffffff;
+$body-bg: white;
 
 $theme-colors: (
   "primary": #323ac9,
   "danger": #ff4136,
+  "light": #fafafa,
 );
 
 $container-max-widths: (

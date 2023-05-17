@@ -1,0 +1,19 @@
+.contactBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0rem;
+}
+
+.contactBox div {
+  margin: 0 4rem;
+}
+
+@media (max-width: 768px) {
+  .contactBox {
+    flex-direction: column-reverse;
+  }
+  .contactBox div {
+    margin: 0.5rem 2rem;
+  }
+}

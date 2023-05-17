@@ -11,11 +11,13 @@ const ProductCard = ({ product }: ProductScreenProps) => {
   return (
     <div className={styles.productCard}>
       <div className={styles.cardImage}>
-        {product.image && (
-          <img src={product.image} alt='photo' height={"250px"} />
+        {!product.image || product.image.includes("///") ? (
+          <img src={noImage} alt='photo' height={"260px"} />
+        ) : (
+          product.image && (
+            <img src={product.image} alt='photo' height={"250px"} />
+          )
         )}
-
-        {!product.image && <img src={noImage} alt='photo' height={"260px"} />}
 
         {product.finalPrice > 0 && (
           <span className={styles.finalPrice}>{product.finalPrice}%</span>
