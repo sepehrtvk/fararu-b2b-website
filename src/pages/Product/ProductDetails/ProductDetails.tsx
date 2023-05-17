@@ -52,30 +52,6 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         </div>
       </div>
     </div>
-    // <div className={styles.productDetails}>
-    //   <div className={styles.details}>
-
-    //     <div className={styles.leftDetails}>
-    //       <div className={styles.buy}>
-    //         <div className={styles.price}>
-    //           <p>قیمت :</p>
-    //           <p>{product.finalPrice.toLocaleString()}</p>
-    //         </div>
-    //         <div className={styles.discount}>
-    //           <p>تخفیف :</p>
-    //           <p>{product.consumerUnitPrice} %</p>
-    //         </div>
-    //         <div className={styles.totalPrice}>
-    //           <p>قیمت با احتساب تخفیف :</p>
-    //           <p>{product.finalPrice}</p>
-    //         </div>
-    //         <div>
-    //           <AddToBasket product={product} vertical={false} />
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 

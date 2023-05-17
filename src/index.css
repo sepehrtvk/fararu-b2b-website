@@ -21,7 +21,7 @@
 }
 
 * {
-  font-family: "yekanBakh";
+  font-family: "yekanBakh" !important;
 }
 .carousel-slider {
   margin-top: 6rem;
