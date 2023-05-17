@@ -35,7 +35,7 @@ export const toLocaleCurrencyString = (price, displayCurrency) => {
   if (!price && price !== 0) {
     return "---";
   }
-  let lang = Localization.getLanguage();
+  let lang = i18next.language;
   if (lang === "fa") {
     return (
       new Intl.NumberFormat("fa-IR", {
@@ -59,7 +59,7 @@ export const toLocaleNumberString = (number, useGrouping) => {
   if (!number && number !== 0) {
     return "---";
   }
-  let lang = Localization.getLanguage();
+  let lang = i18next.language;
   if (lang === "fa") {
     return new Intl.NumberFormat("fa-IR", {
       style: "decimal",
@@ -84,7 +84,7 @@ export const toLocaleDateString = (
   }
 
   try {
-    let lang = Localization.getLanguage();
+    let lang = i18next.language;
     if (lang === "fa") {
       if (config.showDate && config.showTime) {
         return moment(value).format("jYYYY/jM/jD HH:mm:ss");

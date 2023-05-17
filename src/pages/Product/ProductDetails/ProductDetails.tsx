@@ -4,6 +4,7 @@ import noImage from "../../../assets/img/no-image.jpeg";
 
 //Styles
 import styles from "./ProductDetails.module.css";
+import AddToBasket from "../../../components/AddToBasket/AddToBasket";
 type ProductDetailsProps = { product: ProductModel };
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
@@ -46,26 +47,8 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
               <p>قیمت با احتساب تخفیف :</p>
               <p>{product.finalPrice}</p>
             </div>
-            <div className={true ? styles.plusMinusProduct : styles.addToCart}>
-              {/* {false ? (
-                <AddToBasket
-                  dispatch={dispatch}
-                  state={state}
-                  productData={product}
-                />
-              ) : (
-                <button
-                  className={styles.addToCartBtn}
-                  onClick={() =>
-                    dispatch({
-                      type: "ADD_ITEM",
-                      payload: { product: product },
-                      size: 1,
-                    })
-                  }>
-                  افزودن به سبد خرید
-                </button>
-              )} */}
+            <div>
+              <AddToBasket product={product} vertical={false} />
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@
 $body-bg: white;
 
 $theme-colors: (
-  "primary": #323ac9,
+  "primary": #ff3f3f,
   "danger": #ff4136,
   "light": #fafafa,
 );
@@ -17,3 +17,4 @@ $container-max-widths: (
 
 // Import Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap.scss";
+@import "~bootstrap-icons/font/bootstrap-icons.css";
