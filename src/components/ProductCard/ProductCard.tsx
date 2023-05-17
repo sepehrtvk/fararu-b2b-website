@@ -44,9 +44,7 @@ const ProductCard = ({ product }: ProductScreenProps) => {
           )}
         </div>
       </div>
-      <Link
-        to={`/products/${product.productId}`}
-        className={styles.productDetails}>
+      <Link to={`/product`} state={product} className={styles.productDetails}>
         مشاهده محصول
       </Link>
     </div>

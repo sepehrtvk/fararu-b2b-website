@@ -1,0 +1,37 @@
+.productInfo {
+  padding: 2rem;
+  box-shadow: 0 5px 20px rgba(120, 120, 120, 0.3);
+  margin-top: 2rem;
+  border-radius: 15px;
+}
+
+.productInfo h3 {
+  color: #5463ff;
+  margin-bottom: 1rem;
+}
+
+.tableinfo {
+  width: 100%;
+  border-spacing: 10px;
+}
+
+.tableinfo td {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.productInfo td:first-child {
+  background-color: #dddddd;
+  width: 15%;
+}
+
+.productInfo td:last-child {
+  color: #333;
+  background-color: #f0f0f0;
+}
+
+@media (max-width: 560px) {
+  .productInfo td:first-child {
+    width: 45%;
+  }
+}
