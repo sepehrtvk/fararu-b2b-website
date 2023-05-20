@@ -44,7 +44,7 @@ const Banners = () => {
           <div style={{ display: "flex", justifyContent: "center" }}>
             <img src={banner.image} className={styles.image} alt='slider' />
           </div>
-          <p style={{ textAlign: "center", marginTop: "10px" }}>
+          <p style={{ textAlign: "center", paddingTop: "10px" }}>
             {banner.title}
           </p>
         </SwiperSlide>
