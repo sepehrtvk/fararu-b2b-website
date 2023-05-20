@@ -11,6 +11,7 @@ import {
   PostBasketResultModel,
 } from "./types";
 import i18n from "i18next";
+import { AppConfig } from "../../common/app-config";
 
 export const postBasket = (
   basket: BasketModel
@@ -46,6 +47,14 @@ export const getBasketFullData = (
     )
     .pipe(
       map((response) => {
+        response.items = response.items.map((item) => {
+          const url = item.product.image;
+          if (url) {
+            item.product.image = getFullImagePath(url);
+          }
+          return item;
+        });
+
         const diffPrice = headers.find(
           (h) => h.key == "hasdiffrentprice" && h.value == "1"
         );
@@ -57,4 +66,8 @@ export const getBasketFullData = (
       })
     );
   return result;
+};
+
+const getFullImagePath = (imageUrl: string) => {
+  return AppConfig.api.server.url + ":" + AppConfig.api.server.port + imageUrl;
 };

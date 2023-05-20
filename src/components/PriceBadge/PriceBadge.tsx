@@ -9,7 +9,7 @@ const PriceBadge = ({ highPrice, lowPrice }: PriceBadgeProps) => {
   return (
     <div>
       <div>
-        <span className=' text-info ms-2 fs-5 text-decoration-line-through'>
+        <span className='text-info ms-2 fs-6 text-decoration-line-through'>
           {toLocaleCurrencyString(highPrice)}{" "}
         </span>
         <span className='badge bg-primary fs-6'>
@@ -18,7 +18,7 @@ const PriceBadge = ({ highPrice, lowPrice }: PriceBadgeProps) => {
         </span>
       </div>
       <div className='mt-1'>
-        <span className='fw-bold fs-4'>
+        <span className='fw-bold fs-5'>
           {toLocaleCurrencyString(lowPrice, true)}
         </span>
       </div>

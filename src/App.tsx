@@ -6,6 +6,8 @@ import Home from "./pages/Home/Home";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import ProductPage from "./pages/Product/ProductPage";
+import Cart from "./components/Cart/Cart/Cart";
+import Preview from "./components/Preview/Preview/Preview";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
       <Routes>
         <Route path='/product' element={<ProductPage />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/preview' element={<Preview />} />
+        <Route path='/cart' element={<Cart />} />
         <Route path='/home' element={<Home />} />
         <Route path='*' element={<p>404 not found</p>} />
       </Routes>
