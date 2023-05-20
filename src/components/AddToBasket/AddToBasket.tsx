@@ -43,7 +43,7 @@ const AddToBasket = ({ product, batch, vertical }: AddButtonProps) => {
             vertical ? styles.verticalContainer : styles.horizontalContainer
           }>
           {smallerUnit && (
-            <div className={styles.unitContainerStyle}>
+            <div className={vertical ? "mb-2" : styles.unitContainerStyle}>
               <AddToBasketButton
                 product={product}
                 unitInfo={smallerUnit}
@@ -52,7 +52,7 @@ const AddToBasket = ({ product, batch, vertical }: AddButtonProps) => {
             </div>
           )}
           {largerUnit && (
-            <div className={styles.unitContainerStyle}>
+            <div className={vertical ? "" : styles.unitContainerStyle}>
               <AddToBasketButton
                 product={product}
                 unitInfo={largerUnit}
