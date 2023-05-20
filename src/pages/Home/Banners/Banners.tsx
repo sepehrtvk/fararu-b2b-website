@@ -11,19 +11,26 @@ import "swiper/css/pagination";
 
 //Styles
 import styles from "./Banners.module.css";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
+import { finalize } from "rxjs";
 
 const Banners = () => {
   const [banners, setbanners] = useState<BannerItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const subscription = getBannerItems().subscribe({
-      next: (items) => setbanners(items),
-      error: (err) => {
-        notifyToast("error", { message: err.message });
-      },
-    });
+    const subscription = getBannerItems()
+      .pipe(finalize(() => setIsLoading(false)))
+      .subscribe({
+        next: (items) => setbanners(items),
+        error: (err) => {
+          notifyToast("error", { message: err.message });
+        },
+      });
     return () => subscription.unsubscribe();
   }, []);
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <Swiper

@@ -12,11 +12,18 @@ import hamburger from "../../assets/img/menu-burger.svg";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../store/hooks";
 import { selectBasketSKU } from "../../store/selectors";
+import { logout } from "../../store/slices/user";
+import { clearCustomer } from "../../store/slices/customer";
+import { deleteBasket } from "../../store/slices/basket";
 
 const Header = () => {
   const [menu, setMenu] = useState(false);
   const totalQty = useAppSelector((state) => selectBasketSKU(state));
   const isLoggedIn = !!useAppSelector((state) => state.user.token);
+
+  function dispatch(arg0: any) {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <header className={styles.header}>
@@ -40,7 +47,9 @@ const Header = () => {
             {isLoggedIn ? (
               <Link
                 onClick={() => {
-                  //   authCtx.logout();
+                  dispatch(logout());
+                  dispatch(clearCustomer());
+                  dispatch(deleteBasket());
                 }}
                 to='/login'>
                 خروج

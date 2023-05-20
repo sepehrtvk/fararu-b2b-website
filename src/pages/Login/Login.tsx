@@ -11,6 +11,7 @@ import { clearCustomer } from "../../store/slices/customer";
 import { deleteBasket } from "../../store/slices/basket";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getProducts } from "../../api/product";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 const Login = () => {
   const { t } = useTranslation();
@@ -90,9 +91,15 @@ const Login = () => {
         dispatch(deleteBasket());
         dispatch(clearCustomer());
         dispatch(loginByCodeStart({ mobile: data.phone, code: data.password }));
+        setTimeout(() => {
+          navigate("/home");
+        }, 3000);
       }
     }
   };
+
+  if (isLoading) return <LoadingSpinner />;
+
   return (
     <div
       style={{
@@ -100,56 +107,53 @@ const Login = () => {
         justifyContent: "center",
         alignItems: "center",
       }}>
-      {isLoading && <p>loading</p>}
-      {!isLoading && (
-        <form onSubmit={submitHandler} className={styles.formContainer}>
-          <h2 className={styles.header}>فرم ورود</h2>
+      <form onSubmit={submitHandler} className={styles.formContainer}>
+        <h2 className={styles.header}>فرم ورود</h2>
 
-          {step == "phone" && (
-            <div className={styles.formBox}>
-              <label>شماره تلفن</label>
-              <input
-                type='text'
-                name='phone'
-                maxLength={11}
-                value={data.phone}
-                onChange={changeHandler}
-                onFocus={focusHandler}
-                className={
-                  errors.phone && touch.phone
-                    ? styles.unValidate
-                    : styles.validate
-                }
-              />
-              {errors.phone && touch.phone && <span>{errors.phone}</span>}
-            </div>
-          )}
-          {step == "code" && (
-            <div className={styles.formBox}>
-              <label>کد</label>
-              <input
-                type='password'
-                name='password'
-                value={data.password}
-                onChange={changeHandler}
-                onFocus={focusHandler}
-                className={
-                  errors.password && touch.password
-                    ? styles.unValidate
-                    : styles.validate
-                }
-              />
-              {errors.password && touch.password && (
-                <span>{errors.password}</span>
-              )}
-            </div>
-          )}
-          <div className={styles.formButtons}>
-            <button>ورود</button>
-            <Link to='/signup'>ثبت نام</Link>
+        {step == "phone" && (
+          <div className={styles.formBox}>
+            <label>شماره تلفن</label>
+            <input
+              type='text'
+              name='phone'
+              maxLength={11}
+              value={data.phone}
+              onChange={changeHandler}
+              onFocus={focusHandler}
+              className={
+                errors.phone && touch.phone
+                  ? styles.unValidate
+                  : styles.validate
+              }
+            />
+            {errors.phone && touch.phone && <span>{errors.phone}</span>}
           </div>
-        </form>
-      )}
+        )}
+        {step == "code" && (
+          <div className={styles.formBox}>
+            <label>کد</label>
+            <input
+              type='password'
+              name='password'
+              value={data.password}
+              onChange={changeHandler}
+              onFocus={focusHandler}
+              className={
+                errors.password && touch.password
+                  ? styles.unValidate
+                  : styles.validate
+              }
+            />
+            {errors.password && touch.password && (
+              <span>{errors.password}</span>
+            )}
+          </div>
+        )}
+        <div className={styles.formButtons}>
+          <button>ورود</button>
+          <Link to='/signup'>ثبت نام</Link>
+        </div>
+      </form>
     </div>
   );
 };

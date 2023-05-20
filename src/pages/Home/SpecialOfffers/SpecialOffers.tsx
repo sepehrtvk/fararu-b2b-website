@@ -15,21 +15,29 @@ import notifyToast from "../../../components/toast/toast";
 import ProductCard from "../../../components/ProductCard/ProductCard";
 import SwiperComponent from "../../../components/Swiper/SwiperComponent";
 import Icon from "../../../components/Icon/Icon";
+import { finalize } from "rxjs";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 const SpecialOffers = () => {
   const [specialPro, setspecialPro] = useState<ProductModel[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const subscription = getProducts().subscribe({
-      next: setspecialPro,
-      error: (err) => {
-        notifyToast("error", { message: err.message });
-      },
-    });
+    const subscription = getProducts()
+      .pipe(finalize(() => setIsLoading(false)))
+      .subscribe({
+        next: setspecialPro,
+        error: (err) => {
+          notifyToast("error", { message: err.message });
+        },
+      });
+
     return () => {
       subscription.unsubscribe();
     };
   }, []);
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className='carousel-slider my-5'>

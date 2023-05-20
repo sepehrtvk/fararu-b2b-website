@@ -27,8 +27,6 @@ export class Api {
   }
   private generateHeaders(): {} | null {
     const token = store.getState().user.token;
-    console.log("token");
-    console.log(token);
     const appType = AppConfig.login;
     const centerId = store.getState().user.centerId;
     const headers: any = {};

@@ -4,21 +4,28 @@ import { ProductModel } from "../../../api/product/types";
 import { getProducts } from "../../../api/product";
 import notifyToast from "../../../components/toast/toast";
 import Icon from "../../../components/Icon/Icon";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
+import { finalize } from "rxjs";
 
 const LastOrders = () => {
   const [lastProducts, setLastProducts] = useState<ProductModel[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const subscription = getProducts().subscribe({
-      next: setLastProducts,
-      error: (err) => {
-        notifyToast("error", { message: err.message });
-      },
-    });
+    const subscription = getProducts()
+      .pipe(finalize(() => setIsLoading(false)))
+      .subscribe({
+        next: setLastProducts,
+        error: (err) => {
+          notifyToast("error", { message: err.message });
+        },
+      });
     return () => {
       subscription.unsubscribe();
     };
   }, []);
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className='carousel-slider my-5'>
