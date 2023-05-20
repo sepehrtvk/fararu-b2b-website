@@ -1,11 +1,11 @@
 .products {
   padding: 1rem;
-  border: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   margin: 1rem 0;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+}
+.products:last-child {
+  border: none;
+  margin: 0;
 }
 
 .info {
@@ -83,26 +83,11 @@
 
 @media (max-width: 560px) {
   .products {
+    display: flex;
     padding: 0.5rem;
     flex-direction: column;
   }
   .image img {
-    width: 80px;
+    width: 100px;
   }
-}
-
-.details {
-  /* border-left: 1px solid gray; */
-  padding-left: 20px;
-}
-
-.extra {
-  border-right: 1px solid gray;
-  padding-right: 20px;
-  padding-left: 20px;
-}
-
-.extraColor {
-  color: #666;
-  font-family: iranyekan;
 }

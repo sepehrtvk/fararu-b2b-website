@@ -1,14 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import { BasketFullDataItem } from "../../../api/basket/types";
 import {
   toLocaleCurrencyString,
   toLocaleNumberString,
 } from "../../../common/Localization";
+import { store } from "../../../store/store";
+import { checkout } from "../../../api/basket";
+import { finalize } from "rxjs";
+import { deleteBasket } from "../../../store/slices/basket";
+import notifyToast from "../../toast/toast";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type PreviewPayProps = {
   previewItems: BasketFullDataItem[];
 };
 const PreviewPay = ({ previewItems }: PreviewPayProps) => {
+  const { CustomerId, CustomerGroupId } = store.getState().customer;
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const checkOut = () => {
+    if (CustomerId) {
+      setIsLoading(true);
+      checkout({
+        CustomerGroupId,
+        CustomerId,
+        PaymentUsanceId: null,
+      })
+        .pipe(finalize(() => setIsLoading(false)))
+        .subscribe({
+          next: (result) => {
+            if (result.success) {
+              store.dispatch(deleteBasket());
+              notifyToast("success", {
+                message: t("order_sent_successfully"),
+                data: t("tracking_code") + " : " + result.trackingCode,
+              });
+              navigate("/home");
+            } else {
+              notifyToast("error", {
+                message: result.errorMessage ? result.errorMessage : "",
+              });
+            }
+          },
+          error: (err: Error) => {
+            notifyToast("error", {
+              message: err.message,
+            });
+          },
+        });
+    } else
+      notifyToast("error", {
+        message: "Customer id is null",
+      });
+  };
+
+  if (isLoading) return <LoadingSpinner />;
+
   return (
     <div className=''>
       <div className='d-flex justify-content-between align-items-center mb-4'>
@@ -76,19 +127,7 @@ const PreviewPay = ({ previewItems }: PreviewPayProps) => {
 
       <button
         className='btn btn-outline-primary w-100 rounded-3 fw-bold py-2'
-        onClick={() => {
-          // checkout({
-          //   CustomerId: localStorage.getItem("CustomerId"),
-          //   CustomerGroupId: localStorage.getItem("CustomerGroupId"),
-          // })
-          //   .then((res) => {
-          //     dispatch({ type: "CHECKED_OUT" });
-          //     notify("checkout");
-          //   })
-          //   .catch((err) => {
-          //     notify("error", err.response.data.message);
-          //   });
-        }}>
+        onClick={checkOut}>
         ارسال سفارش
       </button>
     </div>
