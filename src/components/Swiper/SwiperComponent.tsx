@@ -34,7 +34,7 @@ const SwiperComponent = ({ products }: SwiperProps) => {
         }}
         spaceBetween={40}
         autoplay={{
-          delay: 1500,
+          delay: 2000,
           disableOnInteraction: false,
         }}
         navigation={true}

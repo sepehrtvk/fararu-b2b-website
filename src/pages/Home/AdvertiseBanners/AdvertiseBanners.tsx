@@ -3,7 +3,7 @@ import adBanner from "../../../assets/banners/adBanner.png";
 
 const AdvertiseBanners = () => {
   return (
-    <div className='conatainer my-5'>
+    <div className='conatainer my-5 py-md-4'>
       <div className='row'>
         <div className='col-md-6 col-12 text-center'>
           <img src={adBanner} alt='adBanner' className='img-fluid rounded-4' />

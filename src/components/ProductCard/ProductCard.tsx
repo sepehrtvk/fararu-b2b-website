@@ -22,18 +22,27 @@ const ProductCard = ({ product }: ProductScreenProps) => {
             navigate("/product", { state: product });
           }}>
           {!product.image || product.image.includes("///") ? (
-            <img src={noImage} className='img-fluid rounded-4' alt='photo' />
+            <img
+              src={noImage}
+              className='img-fluid rounded-4'
+              alt='photo'
+              style={{ height: "220px" }}
+            />
           ) : (
             product.image && (
               <img
                 src={product.image}
                 className='img-fluid rounded-4'
                 alt='photo'
+                style={{ height: "220px" }}
               />
             )
           )}
         </div>
-        <div className='d-flex justify-content-between align-items-center mt-4 px-1'>
+        <div className='mt-3'>
+          <span className={styles.productName}>{product.name}</span>
+        </div>
+        <div className='d-flex justify-content-between align-items-center mt-3 px-1'>
           <AddToBasket product={product} vertical />
           <PriceBadge
             highPrice={product.finalPrice}
