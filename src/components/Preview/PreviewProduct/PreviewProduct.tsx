@@ -94,8 +94,15 @@ const PreviewProduct = ({ previewItem }: PreviewProductProps) => {
         <div className='container-fluid'>
           <div className='row'>
             <div className='col-12'>
-              <div className='mb-3'>
-                <span>{previewItem.product.name}</span>
+              <div className='d-flex justify-content-between align-items-start'>
+                <div className='mb-3'>
+                  <span>{previewItem.product.name}</span>
+                </div>
+                {previewItem.isPrize && (
+                  <div>
+                    <Icon name='gift-fill' color='primary' size={4} />
+                  </div>
+                )}
               </div>
             </div>
             <div className='col-12'>

@@ -8,9 +8,7 @@ import OurBrands from "../../components/OurBrands/OurBrands";
 const Home = () => {
   return (
     <div className='container'>
-      <p>banners</p>
       <Banners />
-      <p>Special Products</p>
       <SpecialOffers />
       <AdvertiseBanners />
       <LastOrders />
