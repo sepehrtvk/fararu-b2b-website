@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import PreviewPay from "../PreviewPay/PreviewPay";
 import { toLocaleCurrencyString } from "../../../common/Localization";
 import PreviewProduct from "../PreviewProduct/PreviewProduct";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 
 const Preview = () => {
   const [previewItems, setPreviewItems] = useState<BasketFullDataItem[]>([]);
@@ -45,7 +46,7 @@ const Preview = () => {
     } else notifyToast("error", { message: "Customer id is null" });
   }, []);
 
-  if (isLoading) return <p>loading..</p>;
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className='container-fluid bg-light2 py-5'>

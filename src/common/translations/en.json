@@ -326,5 +326,7 @@
   "loading_customer_payment_type":"loading customer payment type",
   "loading_my_orders":"Loading my orders",
   "price_changed":"Price has changed",
-  "search_for_":"Search for: "
+  "search_for_":"Search for: ",
+  "loading_":"loading"
+
 }
