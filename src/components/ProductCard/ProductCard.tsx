@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 //Styles
 import styles from "./ProductCard.module.css";
 import { ProductModel } from "../../api/product/types";
@@ -10,10 +10,17 @@ import PriceBadge from "../PriceBadge/PriceBadge";
 type ProductScreenProps = { product: ProductModel };
 
 const ProductCard = ({ product }: ProductScreenProps) => {
+  const navigate = useNavigate();
+
   return (
     <div className='card rounded-4 border-0'>
       <div className='card-body p-0'>
-        <div className='text-center bg-light2 p-4 rounded-4'>
+        <div
+          className='text-center bg-light2 p-4 rounded-4'
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            navigate("/product", { state: product });
+          }}>
           {!product.image || product.image.includes("///") ? (
             <img src={noImage} className='img-fluid rounded-4' alt='photo' />
           ) : (
