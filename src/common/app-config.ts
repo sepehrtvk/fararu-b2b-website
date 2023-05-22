@@ -65,8 +65,8 @@ export const AppConfig: ApplicationConfig = {
   termsAndConditions: false,
   api: {
     server: {
-      port: 12367,
-      url: "http://77.238.123.10",
+      port: 8282,
+      url: "http://5.202.179.236",
     },
   },
   userLocation: true,

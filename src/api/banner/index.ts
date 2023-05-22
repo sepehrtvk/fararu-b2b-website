@@ -32,7 +32,7 @@ export const getBannerItems = (): Observable<BannerItem[]> => {
         });
         return result.map((item) => {
           return {
-            image: url + "/" + item.mediumURL,
+            image: (url + "/" + item.mediumURL).replace("-thumbnail", ""),
             title: item.title,
           };
         });

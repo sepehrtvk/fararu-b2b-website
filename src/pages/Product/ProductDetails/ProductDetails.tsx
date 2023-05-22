@@ -27,8 +27,8 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
   return (
     <div className='container'>
       <div className='row'>
-        <div className='col-12 col-md-5'>{productImage()}</div>
-        <div className='col-12 col-md-7 mt-4 mt-md-3 py-2 py-md-4 d-flex flex-column  justify-content-between'>
+        <div className='col-12 col-md-4'>{productImage()}</div>
+        <div className='col-12 col-md-8 mt-4 mt-md-3 py-2 py-md-4 d-flex flex-column  justify-content-between'>
           <div>
             <h2 className='fw-bold'>{product.name}</h2>
             <div className='d-flex align-items-center my-3'>

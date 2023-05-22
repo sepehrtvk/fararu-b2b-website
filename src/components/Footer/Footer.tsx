@@ -27,7 +27,7 @@ const Footer = () => {
       <div className='container mb-5'>
         <div className='row'>
           <div className='col-12'>
-            <h4 className='my-3 fw-bold'>درباره هنکل</h4>
+            <h4 className='my-3 fw-bold'>درباره ما</h4>
             <p className='mx-2 mx-md-5 textJustify'>
               لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
               استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله

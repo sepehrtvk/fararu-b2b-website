@@ -28,12 +28,6 @@ const Login = () => {
     if (loginError) notifyToast("error", { message: loginError });
   }, [loginError]);
 
-  useEffect(() => {
-    getProducts().subscribe((res) => {
-      console.log(res);
-    });
-  }, []);
-
   const [touch, setTouch] = useState({
     email: false,
     password: false,
@@ -93,7 +87,7 @@ const Login = () => {
         dispatch(loginByCodeStart({ mobile: data.phone, code: data.password }));
         setTimeout(() => {
           navigate("/home");
-        }, 3000);
+        }, 0);
       }
     }
   };
@@ -149,9 +143,11 @@ const Login = () => {
             )}
           </div>
         )}
-        <div className={styles.formButtons}>
-          <button>ورود</button>
-          <Link to='/signup'>ثبت نام</Link>
+        <div className='d-flex flex-column'>
+          <button className='btn btn-primary rounded-2 text-white'>ورود</button>
+          <Link className='btn btn-ligh2 mt-3 rounded-2 ' to='/signup'>
+            ثبت نام
+          </Link>
         </div>
       </form>
     </div>

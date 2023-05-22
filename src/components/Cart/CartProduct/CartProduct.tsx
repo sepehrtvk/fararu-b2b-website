@@ -12,10 +12,11 @@ const CartProduct = ({ productData, isPreview, preview }: any) => {
     <div className={styles.products}>
       <div className={styles.info}>
         <div className={styles.image}>
-          {productData.image && (
+          {!productData.image || productData.image.includes("///") ? (
+            <img src={noImage} alt='productImage' />
+          ) : (
             <img src={productData.image} alt={productData.name} />
           )}
-          {!productData.image && <img src={noImage} alt='productImage' />}
         </div>
         <div>
           <div className='mb-2'>

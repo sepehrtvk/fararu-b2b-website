@@ -9,21 +9,20 @@ import searchIcon from "../../assets/img/search.svg";
 import shopIcon from "../../assets/img/shopping-bag.svg";
 import cross from "../../assets/img/cross.svg";
 import hamburger from "../../assets/img/menu-burger.svg";
-import { Link } from "react-router-dom";
-import { useAppSelector } from "../../store/hooks";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { selectBasketSKU } from "../../store/selectors";
 import { logout } from "../../store/slices/user";
 import { clearCustomer } from "../../store/slices/customer";
 import { deleteBasket } from "../../store/slices/basket";
+import { toLocaleNumberString } from "../../common/Localization";
 
 const Header = () => {
   const [menu, setMenu] = useState(false);
   const totalQty = useAppSelector((state) => selectBasketSKU(state));
   const isLoggedIn = !!useAppSelector((state) => state.user.token);
-
-  function dispatch(arg0: any) {
-    throw new Error("Function not implemented.");
-  }
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   return (
     <header className={styles.header}>
@@ -45,26 +44,39 @@ const Header = () => {
           </div>
           <div className={styles.buttons}>
             {isLoggedIn ? (
-              <Link
+              <button
+                className='btn btn-light2 ms-2'
                 onClick={() => {
                   dispatch(logout());
                   dispatch(clearCustomer());
                   dispatch(deleteBasket());
-                }}
-                to='/login'>
+                  navigate("/login");
+                }}>
                 خروج
-              </Link>
+              </button>
             ) : (
-              <Link to='/'>ورود | ثبت نام </Link>
+              <button
+                className='btn btn-light2 ms-2'
+                onClick={() => {
+                  navigate("/login");
+                }}>
+                ورود | ثبت نام
+              </button>
             )}
 
-            <Link to='/cart' className={styles.cart}>
+            <button
+              className='btn btn-light2 position-relative'
+              onClick={() => {
+                navigate("/cart");
+              }}>
               سبد خرید
-              <img src={shopIcon} alt='shop' />
+              <img src={shopIcon} className='me-2' alt='shop' />
               {totalQty > 0 && (
-                <span className={styles.itemCounter}>{totalQty}</span>
+                <span className={styles.itemCounter}>
+                  {toLocaleNumberString(totalQty)}
+                </span>
               )}
-            </Link>
+            </button>
           </div>
         </div>
       </div>
