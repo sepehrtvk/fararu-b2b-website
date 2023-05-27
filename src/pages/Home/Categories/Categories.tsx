@@ -7,6 +7,8 @@ import {
 import { getProductGroups } from "../../../api/product";
 
 import noImage from "../../../assets/img/no-image.jpeg";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
+import { finalize } from "rxjs";
 
 const Categories = () => {
   const [productGroupTwoLevel, setProductGroupTwoLevel] = useState<
@@ -14,36 +16,43 @@ const Categories = () => {
   >([]);
 
   const [activeCategory, setActiveCategory] = useState<string | undefined>("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const subscription = getProductGroups().subscribe({
-      next: (tree: ProductGroupModel[]) => {
-        const productGroupTwoLevelTemp: ProductGroupTwoLevelModel[] = [];
+    const subscription = getProductGroups()
+      .pipe(finalize(() => setIsLoading(false)))
+      .subscribe({
+        next: (tree: ProductGroupModel[]) => {
+          const productGroupTwoLevelTemp: ProductGroupTwoLevelModel[] = [];
 
-        tree.map((row) => {
-          row.submenus?.map((sub) => {
-            const temp: ProductGroupTwoLevelModel = {
-              firstLevel: null,
-              secondLevel: [],
-            };
-            // if (sub.nLevel == 1) {
-            temp.firstLevel = sub;
-            if (sub.submenus) temp.secondLevel = sub.submenus;
-            //}
-            productGroupTwoLevelTemp.push(temp);
+          tree.map((row) => {
+            row.submenus?.map((sub) => {
+              const temp: ProductGroupTwoLevelModel = {
+                firstLevel: null,
+                secondLevel: [],
+              };
+              // if (sub.nLevel == 1) {
+              temp.firstLevel = sub;
+              if (sub.submenus) temp.secondLevel = sub.submenus;
+              //}
+              productGroupTwoLevelTemp.push(temp);
+            });
           });
-        });
-        setProductGroupTwoLevel(productGroupTwoLevelTemp);
-      },
-      error: () => {},
-    });
+          setProductGroupTwoLevel(productGroupTwoLevelTemp);
+          setActiveCategory(productGroupTwoLevelTemp[0].firstLevel?.id);
+        },
+        error: () => {},
+      });
     return () => subscription.unsubscribe();
   }, []);
 
   const renderFirstLevelTitle = () => {
     return productGroupTwoLevel.map((group) => {
       return (
-        <div className='mx-4' style={{ cursor: "pointer" }}>
+        <div
+          key={group.firstLevel?.id}
+          className='mx-4'
+          style={{ cursor: "pointer" }}>
           <span
             className={
               " pb-2 " +
@@ -70,7 +79,9 @@ const Categories = () => {
     if (secondLevelTemp && secondLevelTemp.length) {
       return secondLevelTemp?.map((item) => {
         return (
-          <div className='d-flex flex-column align-items-center  mx-4'>
+          <div
+            key={item?.id}
+            className='d-flex flex-column align-items-center  mx-4'>
             <img
               className='bg-light p-3 rounded-circle'
               width={"200px"}
@@ -83,6 +94,8 @@ const Categories = () => {
       });
     } else return null;
   };
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div className='my-5 py-5 d-md-block d-none'>
