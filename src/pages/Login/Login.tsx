@@ -10,8 +10,9 @@ import { clearError, loginByCodeStart } from "../../store/slices/user";
 import { clearCustomer } from "../../store/slices/customer";
 import { deleteBasket } from "../../store/slices/basket";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { getProducts } from "../../api/product";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import logo from "../../assets/img/logo.png";
+import { toLocaleNumberString } from "../../common/Localization";
 
 const Login = () => {
   const { t } = useTranslation();
@@ -102,7 +103,13 @@ const Login = () => {
         alignItems: "center",
       }}>
       <form onSubmit={submitHandler} className={styles.formContainer}>
-        <h2 className={styles.header}>فرم ورود</h2>
+        <div className='d-flex align-items-center'>
+          <div>
+            <img width={"70px"} src={logo} alt='logo' />
+          </div>
+
+          <span className={styles.header}>فرم ورود</span>
+        </div>
 
         {step == "phone" && (
           <div className={styles.formBox}>
