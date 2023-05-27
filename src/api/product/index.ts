@@ -1,13 +1,13 @@
-import {map, Observable} from 'rxjs';
-import {Api} from '..';
-import {getOriginFromUrl} from '../../common/url';
-import {store} from '../../store/store';
+import { map, Observable } from "rxjs";
+import { Api } from "..";
+import { getOriginFromUrl } from "../../common/url";
+import { store } from "../../store/store";
 import {
   ProductBatchModel,
   ProductGroupModel,
   ProductModel,
   ProductTypeId,
-} from './types';
+} from "./types";
 
 export interface ProductsRequestOptions {
   skip: number;
@@ -62,17 +62,17 @@ type ProductApiResult = {
 };
 
 export const getProducts = (
-  options?: ProductsRequestOptions,
+  options?: ProductsRequestOptions
 ): Observable<ProductModel[]> => {
-  const {CustomerId, CustomerGroupId , DcRef} = store.getState().customer;
+  const { CustomerId, CustomerGroupId, DcRef } = store.getState().customer;
   const request: any = {};
   const parameters = {
     CustomerId,
     CustomerGroupId,
-    DcRef
+    DcRef,
   };
   return new Api()
-    .get<ProductApiResult[]>('api/PolProductsNo/get', {
+    .get<ProductApiResult[]>("api/PolProductsNo/get", {
       query: options,
       params: parameters,
       request,
@@ -80,7 +80,7 @@ export const getProducts = (
     .pipe(
       map((response: ProductApiResult[]) => {
         const origin = getOriginFromUrl(request.url);
-        return response.map(item => {
+        return response.map((item) => {
           return {
             productId: item.productId,
             code: item.code,
@@ -133,14 +133,14 @@ export const getProducts = (
             sellUserPrice: item.sellUserPrice,
           };
         });
-      }),
+      })
     );
 };
 
 export const getProductGroups = (): Observable<ProductGroupModel[]> => {
   const request: any = {};
   return new Api()
-    .get<ProductGroupModel[]>('api/PolProductGroupsNo/get', {
+    .get<ProductGroupModel[]>("api/PolProductGroupsNo/get", {
       log: false,
       request,
     })
@@ -149,7 +149,7 @@ export const getProductGroups = (): Observable<ProductGroupModel[]> => {
         const origin = getOriginFromUrl(request.url);
         appendOriginToImageUrl(result, origin);
         return result;
-      }),
+      })
     );
 };
 
@@ -158,17 +158,11 @@ const appendOriginToImageUrl = (items: ProductGroupModel[], origin: string) => {
     if (item.submenus && item.submenus.length > 0) {
       appendOriginToImageUrl(item.submenus, origin);
     }
-    item.imageUrl = item.mediumURL ? origin + '/' + item.mediumURL : null;
+    item.imageUrl = item.mediumURL ? origin + "/" + item.mediumURL : null;
   }
 };
 
 export const getProductBatches = (productId: string) =>
-  new Api().get<ProductBatchModel[]>('api/PolProductsNo/GetBatch', {
-    query: {productId},
+  new Api().get<ProductBatchModel[]>("api/PolProductsNo/GetBatch", {
+    query: { productId },
   });
-// .pipe(
-// delay(5000),
-// map(() => {
-//   throw new Error('Error !');
-// }),
-// );

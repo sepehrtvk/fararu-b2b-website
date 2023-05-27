@@ -48,11 +48,15 @@ export interface ProductGroupModel {
   parentId?: string;
   nLevel: number;
 }
+export interface ProductGroupTwoLevelModel {
+  firstLevel: ProductGroupModel | null;
+  secondLevel: ProductGroupModel[] | null;
+}
 
 export enum ProductTypeId {
-  SingleUnit = '7df31ef0-b64f-442e-8436-26106b74b3fe',
-  Bulk = 'f8743892-6efc-4797-8339-ace2371894e0',
-  DoubleUnit = 'f13f1d61-8aee-43c7-b555-01ef18e25050',
+  SingleUnit = "7df31ef0-b64f-442e-8436-26106b74b3fe",
+  Bulk = "f8743892-6efc-4797-8339-ace2371894e0",
+  DoubleUnit = "f13f1d61-8aee-43c7-b555-01ef18e25050",
 }
 
 export enum ProductUnit {
