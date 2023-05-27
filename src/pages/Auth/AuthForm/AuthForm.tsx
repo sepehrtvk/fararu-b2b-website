@@ -1,11 +1,17 @@
 import React, { EventHandler } from "react";
 import logo from "../../../assets/img/logo.png";
 
+export type SelectOptions = {
+  name: string;
+  id: number;
+};
+
 export type AuthFormField = {
   text: string;
   key: string;
   value?: string | undefined;
-  type: "text" | "password";
+  type: "text" | "password" | "select";
+  selectOptions?: SelectOptions[];
   hasError: boolean;
   hasErrorMessage?: string | undefined;
   valueChangeHandler: (event: any) => void;
@@ -17,6 +23,8 @@ type AuthFormProps = {
   title: string;
   buttonTitle: string;
   buttonClickHandler: (event: any) => void;
+  secondButtonTitle?: string;
+  secondButtonClickHandler?: (event: any) => void;
 };
 
 const AuthForm = ({
@@ -24,6 +32,8 @@ const AuthForm = ({
   title,
   buttonTitle,
   buttonClickHandler,
+  secondButtonTitle,
+  secondButtonClickHandler,
 }: AuthFormProps) => {
   const renderField = (field: AuthFormField) => {
     return (
@@ -31,15 +41,33 @@ const AuthForm = ({
         <label htmlFor={field.text} className='form-label textJustify'>
           {field.text}
         </label>
-        <input
-          type={field.type}
-          className='form-control'
-          placeholder={field.key}
-          id={field.text}
-          value={field.value}
-          onChange={field.valueChangeHandler}
-          onBlur={field.inputBlurHandler}
-        />
+        {field.type == "select" ? (
+          <select
+            className='form-select'
+            aria-label='select'
+            onChange={field.valueChangeHandler}>
+            <option> انتخاب کنید</option>
+            {field.selectOptions &&
+              field.selectOptions.map((option) => {
+                return (
+                  <option key={option.id} value={option.id}>
+                    {option.name}
+                  </option>
+                );
+              })}
+          </select>
+        ) : (
+          <input
+            type={field.type}
+            className='form-control'
+            placeholder={field.key}
+            id={field.text}
+            value={field.value}
+            onChange={field.valueChangeHandler}
+            onBlur={field.inputBlurHandler}
+          />
+        )}
+
         {field.hasError && (
           <div className='form-text text-danger'>{field.hasErrorMessage}</div>
         )}
@@ -67,6 +95,13 @@ const AuthForm = ({
               className='btn btn-primary text-white rounded-3 w-100 mt-4'>
               {buttonTitle}
             </button>
+            {secondButtonTitle && (
+              <button
+                className='btn btn-outline-primary rounded-3 w-100 mt-2'
+                onClick={secondButtonClickHandler}>
+                {secondButtonTitle}
+              </button>
+            )}
           </form>
           <div
             className='fw-light textJustify mt-1'

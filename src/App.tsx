@@ -10,6 +10,7 @@ import Cart from "./components/Cart/Cart/Cart";
 import Preview from "./components/Preview/Preview/Preview";
 import { useAppSelector } from "./store/hooks";
 import { store } from "./store/store";
+import Signup from "./pages/Auth/Signup/Signup";
 
 function App() {
   const isLoggedIn = !!useAppSelector((store) => store.user.token);
@@ -19,6 +20,7 @@ function App() {
       <>
         <Routes>
           <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
         </Routes>
       </>
     );

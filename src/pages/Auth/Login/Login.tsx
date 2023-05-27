@@ -122,71 +122,12 @@ const Login = () => {
       title='ورود'
       buttonTitle='ورود'
       buttonClickHandler={submitHandler}
+      secondButtonTitle='ثبت نام'
+      secondButtonClickHandler={() => {
+        navigate("/signup");
+      }}
     />
   );
-  //   <div
-  //     style={{
-  //       display: "flex",
-  //       justifyContent: "center",
-  //       alignItems: "center",
-  //     }}>
-  //     <form onSubmit={submitHandler} className={styles.formContainer}>
-  //       <div className='d-flex align-items-center'>
-  //         <div>
-  //           <img width={"70px"} src={logo} alt='logo' />
-  //         </div>
-
-  //         <span className={styles.header}>فرم ورود</span>
-  //       </div>
-
-  //       {step == "phone" && (
-  //         <div className={styles.formBox}>
-  //           <label>شماره تلفن</label>
-  //           <input
-  //             type='text'
-  //             name='phone'
-  //             maxLength={11}
-  //             value={data.phone}
-  //             onChange={changeHandler}
-  //             onFocus={focusHandler}
-  //             className={
-  //               errors.phone && touch.phone
-  //                 ? styles.unValidate
-  //                 : styles.validate
-  //             }
-  //           />
-  //           {errors.phone && touch.phone && <span>{errors.phone}</span>}
-  //         </div>
-  //       )}
-  //       {step == "code" && (
-  //         <div className={styles.formBox}>
-  //           <label>کد</label>
-  //           <input
-  //             type='password'
-  //             name='password'
-  //             value={data.password}
-  //             onChange={changeHandler}
-  //             onFocus={focusHandler}
-  //             className={
-  //               errors.password && touch.password
-  //                 ? styles.unValidate
-  //                 : styles.validate
-  //             }
-  //           />
-  //           {errors.password && touch.password && (
-  //             <span>{errors.password}</span>
-  //           )}
-  //         </div>
-  //       )}
-  //       <div className='d-flex flex-column'>
-  //         <button className='btn btn-primary rounded-2 text-white'>ورود</button>
-  //         <Link className='btn btn-ligh2 mt-3 rounded-2 ' to='/signup'>
-  //           ثبت نام
-  //         </Link>
-  //       </div>
-  //     </form>
-  //   </div>
-  // );
 };
 
 export default Login;
