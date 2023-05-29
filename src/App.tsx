@@ -1,6 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Auth/Login/Login";
 import Home from "./pages/Home/Home";
 import Header from "./components/Header/Header";
@@ -21,6 +21,7 @@ function App() {
         <Routes>
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='*' element={<Navigate to='/login' />} />
         </Routes>
       </>
     );
@@ -33,7 +34,7 @@ function App() {
           <Route path='/preview' element={<Preview />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/home' element={<Home />} />
-          <Route path='*' element={<p>404 not found</p>} />
+          <Route path='*' element={<Navigate to='/home' />} />
         </Routes>
         <Footer />
       </>
