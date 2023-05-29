@@ -1,5 +1,6 @@
 import React, { EventHandler } from "react";
 import logo from "../../../assets/img/logo.png";
+import TermsModal from "../TermsModal/TermsModal";
 
 export type SelectOptions = {
   name: string;
@@ -103,16 +104,7 @@ const AuthForm = ({
               </button>
             )}
           </form>
-          <div
-            className='fw-light textJustify mt-1'
-            style={{ fontSize: "0.75rem" }}>
-            <span> ورود شما به معنای پذیرش</span>
-            <span className='text-danger text-decoration-underline'>
-              {" "}
-              شرایط و قوانین حریم‌خصوصی{" "}
-            </span>
-            <span>است.</span>
-          </div>
+          <TermsModal />
         </div>
       </div>
     </div>
