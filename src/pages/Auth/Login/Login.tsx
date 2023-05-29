@@ -107,13 +107,13 @@ const Login = () => {
         dispatch(clearCustomer());
         dispatch(loginByCodeStart({ mobile: phoneValue, code: codeValue }));
       }
-    }
 
-    if (loginError) notifyToast("error", { message: loginError });
-    else
-      setTimeout(() => {
-        navigate("/home");
-      }, 0);
+      if (loginError) notifyToast("error", { message: loginError });
+      else
+        setTimeout(() => {
+          navigate("/home");
+        }, 0);
+    }
   };
 
   if (isLoading) return <LoadingSpinner maxHeight />;
