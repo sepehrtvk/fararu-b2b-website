@@ -27,6 +27,7 @@
 
 .logo {
   flex: 0 0 15%;
+  cursor: pointer;
 }
 
 .search {

@@ -64,11 +64,13 @@ const Header = () => {
         <div className={styles.topheader}>
           <div
             className={menu ? styles.hamburgerOpen : styles.hamburger}
-            onClick={() => setMenu(!menu)}>
+            onClick={() => {
+              setMenu(!menu);
+            }}>
             <img src={menu ? cross : hamburger} alt='hamburger' />
           </div>
 
-          <div className={styles.logo}>
+          <div className={styles.logo} onClick={() => navigate("/home")}>
             <img width={"70px"} src={logo} alt='logo' />
           </div>
           <div className={styles.search}>
