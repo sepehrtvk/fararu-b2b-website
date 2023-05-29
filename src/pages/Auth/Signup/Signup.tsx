@@ -92,43 +92,55 @@ const Signup = () => {
   });
 
   const { t } = useTranslation();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [step, setStep] = useState<"phone" | "signup">("phone");
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [cities, setCities] = useState<City[]>([]);
 
   useEffect(() => {
-    getCounties().subscribe({
-      next: (counties) => {
-        getAreas().subscribe({
-          next: (areas) => {
-            setCities(
-              areas.map((area) => {
-                let c = counties.find(
-                  (county) => county.stateRef == area.countyRef
-                );
-                return {
-                  id: area.id,
-                  name: area.areaName,
-                  state: c ? c.countyName : "",
-                };
+    getCounties()
+      .pipe(
+        finalize(() => {
+          setIsLoading(false);
+        })
+      )
+      .subscribe({
+        next: (counties) => {
+          getAreas()
+            .pipe(
+              finalize(() => {
+                setIsLoading(false);
               })
-            );
-          },
-          error: (err) => {
-            notifyToast("error", {
-              message: err.message,
+            )
+            .subscribe({
+              next: (areas) => {
+                setCities(
+                  areas.map((area) => {
+                    let c = counties.find(
+                      (county) => county.stateRef == area.countyRef
+                    );
+                    return {
+                      id: area.id,
+                      name: area.areaName,
+                      state: c ? c.countyName : "",
+                    };
+                  })
+                );
+              },
+              error: (err) => {
+                notifyToast("error", {
+                  message: err.message,
+                });
+              },
             });
-          },
-        });
-      },
-      error: (err) => {
-        notifyToast("error", {
-          message: err.message,
-        });
-      },
-    });
+        },
+        error: (err) => {
+          notifyToast("error", {
+            message: err.message,
+          });
+        },
+      });
   }, []);
 
   if (step == "phone")
@@ -293,7 +305,7 @@ const Signup = () => {
     }
   };
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading) return <LoadingSpinner maxHeight />;
 
   return (
     <AuthForm
