@@ -1,4 +1,4 @@
-import React from "react";
+import { useLayoutEffect } from "react";
 import ProductDetails from "./ProductDetails/ProductDetails";
 import ProductInfo from "./ProductInfo/ProductInfo";
 import { ProductModel } from "../../api/product/types";
@@ -7,6 +7,10 @@ import { useLocation } from "react-router-dom";
 const ProductPage = () => {
   const location = useLocation();
   const state = location.state;
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const product = state as ProductModel;
   return (
