@@ -1,0 +1,96 @@
+.container {
+  padding: 0 15px;
+}
+
+.breadcrumb {
+  padding: 1.2rem;
+  margin: 2rem 0;
+  box-shadow: 0 5px 15px rgba(120, 120, 120, 0.3);
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.breadcrumb a {
+  color: #666;
+}
+
+.breadcrumb .pages {
+  color: #5463ff;
+}
+
+.sort {
+  display: flex;
+  color: #444;
+  align-items: center;
+}
+
+.selector {
+  margin-right: 10px;
+  display: flex;
+}
+
+.selector .deactive {
+  padding: 8px 15px;
+  background-color: rgba(84, 98, 255, 0.26);
+  margin-left: 8px;
+  border-radius: 10px;
+  color: #444;
+  cursor: pointer;
+}
+
+.active {
+  padding: 8px 15px;
+  background-color: #5463ff;
+  margin-left: 8px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+}
+
+@media (max-width: 560px) {
+  .sort {
+    flex-direction: column;
+    position: relative;
+    padding: 4px 10px;
+    background-color: rgba(84, 98, 255, 0.26);
+    margin-left: 8px;
+    border-radius: 10px;
+    color: #444;
+    cursor: pointer;
+  }
+  .selector {
+    flex-direction: column;
+    padding: 5px;
+    box-shadow: 0 4px 10px rgba(120, 120, 120, 0.3);
+    position: absolute;
+    z-index: 200;
+    top: 2.5rem;
+    background-color: #fff;
+    border-radius: 10px;
+    visibility: hidden;
+    transition: visibility 0.3s ease-in;
+  }
+
+  .selector .deactive {
+    padding: 8px 15px;
+    background-color: transparent;
+    margin-left: 0;
+    color: #444;
+    cursor: pointer;
+  }
+
+  .selector .active {
+    padding: 8px 15px;
+    background-color: transparent;
+    margin-left: 0px;
+    border-radius: 10px;
+    color: #5463ff;
+    cursor: pointer;
+  }
+
+  .sort:hover .selector {
+    visibility: visible;
+  }
+}
