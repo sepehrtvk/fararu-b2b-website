@@ -11,6 +11,7 @@ import Preview from "./components/Preview/Preview/Preview";
 import { useAppSelector } from "./store/hooks";
 import { store } from "./store/store";
 import Signup from "./pages/Auth/Signup/Signup";
+import Shop from "./pages/Shop/Shop/Shop";
 
 function App() {
   const isLoggedIn = !!useAppSelector((store) => store.user.token);
@@ -30,6 +31,7 @@ function App() {
       <>
         <Header />
         <Routes>
+          <Route path='/shop' element={<Shop />} />
           <Route path='/product' element={<ProductPage />} />
           <Route path='/preview' element={<Preview />} />
           <Route path='/cart' element={<Cart />} />
