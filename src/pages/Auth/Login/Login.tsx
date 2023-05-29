@@ -25,7 +25,6 @@ const Login = () => {
     hasError: phoneHasError,
     valueChangeHandler: phoneChangeHandler,
     inputBlurHandler: phoneBlurHandler,
-    reset: resetPhone,
   } = useInput((value: string) => {
     return value.length == 11 && +value;
   });
@@ -36,7 +35,6 @@ const Login = () => {
     hasError: codeHasError,
     valueChangeHandler: codeChangeHandler,
     inputBlurHandler: codeBlurHandler,
-    reset: codePhone,
   } = useInput((value: string) => {
     return +value;
   });
@@ -44,6 +42,7 @@ const Login = () => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState<"phone" | "code">("phone");
+  const loginError = useAppSelector((store) => store.user.loginError);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -103,18 +102,21 @@ const Login = () => {
 
       dispatch(clearError());
       dispatch(clearCustomer());
-      if (phoneValue) {
+      if (phoneValue && codeValue) {
         dispatch(deleteBasket());
         dispatch(clearCustomer());
         dispatch(loginByCodeStart({ mobile: phoneValue, code: codeValue }));
-        setTimeout(() => {
-          navigate("/home");
-        }, 0);
       }
     }
+
+    if (loginError) notifyToast("error", { message: loginError });
+    else
+      setTimeout(() => {
+        navigate("/home");
+      }, 0);
   };
 
-  if (isLoading) return <LoadingSpinner />;
+  if (isLoading) return <LoadingSpinner maxHeight />;
 
   return (
     <AuthForm
