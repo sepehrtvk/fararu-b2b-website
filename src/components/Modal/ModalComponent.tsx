@@ -12,8 +12,10 @@ type ModalComponentProps = {
   headerText: string;
   bodyText: string;
   footerButtonText: string;
+  footerButtonText2?: string;
   modalIsOpen: boolean;
   closeModal: () => void;
+  confirmModal?: () => void;
 };
 
 const ModalComponent = (props: ModalComponentProps) => {
@@ -27,6 +29,13 @@ const ModalComponent = (props: ModalComponentProps) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions className='justify-content-center'>
+          {props.footerButtonText2 && (
+            <span
+              className='btn btn-info text-white mb-3 ms-3'
+              onClick={props.confirmModal}>
+              {props.footerButtonText2}
+            </span>
+          )}
           <span
             className='btn btn-primary text-white mb-3'
             onClick={props.closeModal}>

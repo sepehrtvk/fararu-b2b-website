@@ -1,6 +1,6 @@
 import React from "react";
 import CartProducts from "../CartProduct/CartProduct";
-import { useAppSelector } from "../../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { selectBasketItemsAsList } from "../../../store/selectors";
 import { BasketItem } from "../../../api/basket/types";
 import CartPay from "../CartPay/CartPay";
@@ -9,10 +9,12 @@ import cartEmpty from "../../../assets/img/empty-cart.svg";
 import styles from "./Cart.module.css";
 import { Link } from "react-router-dom";
 import { toLocaleCurrencyString } from "../../../common/Localization";
+import Icon from "../../../components/Icon/Icon";
+import { deleteBasket } from "../../../store/slices/basket";
+import DeleteCartModal from "../DeleteCartModal/DeleteCartModal";
 
 const Cart = () => {
   const basketItems = useAppSelector((state) => selectBasketItemsAsList(state));
-
   const uniqueItems: BasketItem[] = [];
 
   basketItems.forEach((item) => {
@@ -57,27 +59,30 @@ const Cart = () => {
               <div className='card-body p-4'>
                 <div className='d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom'>
                   <span>لیست محصولات منتخب شما</span>
-                  <div>
-                    <span>جمع کالاهای سفارش داده شده : </span>
-                    <span className='fw-bold fs-5'>
-                      {toLocaleCurrencyString(
-                        basketItems
-                          .map(
-                            (item) =>
-                              item.product.finalPrice *
-                              item.qty *
-                              item.unitInfo.convertFactor
-                          )
-                          .reduce((price, total) => total + price),
-                        true
-                      )}
-                    </span>
+                  <div className='d-flex align-items-center'>
+                    <div>
+                      <span>جمع کالاهای سفارش داده شده : </span>
+                      <span className='fw-bold fs-5'>
+                        {toLocaleCurrencyString(
+                          basketItems
+                            .map(
+                              (item) =>
+                                item.product.finalPrice *
+                                item.qty *
+                                item.unitInfo.convertFactor
+                            )
+                            .reduce((price, total) => total + price),
+                          true
+                        )}
+                      </span>
+                    </div>
+                    <DeleteCartModal />
                   </div>
                 </div>
                 {uniqueItems.map((product) => (
                   <CartProducts
                     key={product.product.productId}
-                    productData={product.product}
+                    product={product.product}
                   />
                 ))}
               </div>
