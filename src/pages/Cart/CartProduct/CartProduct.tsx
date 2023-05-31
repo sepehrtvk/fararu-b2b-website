@@ -4,8 +4,8 @@ import React from "react";
 import styles from "./CartProduct.module.css";
 
 import noImage from "../../../assets/img/no-image.jpeg";
-import AddToBasket from "../../AddToBasket/AddToBasket";
-import PriceBadge from "../../PriceBadge/PriceBadge";
+import AddToBasket from "../../../components/AddToBasket/AddToBasket";
+import PriceBadge from "../../../components/PriceBadge/PriceBadge";
 
 const CartProduct = ({ productData, isPreview, preview }: any) => {
   return (

@@ -8,12 +8,12 @@ import {
   BasketFullDataItem,
   BasketFullDataModel,
 } from "../../../api/basket/types";
-import notifyToast from "../../toast/toast";
+import notifyToast from "../../../components/toast/toast";
 import { useNavigate } from "react-router-dom";
 import PreviewPay from "../PreviewPay/PreviewPay";
 import { toLocaleCurrencyString } from "../../../common/Localization";
 import PreviewProduct from "../PreviewProduct/PreviewProduct";
-import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 const Preview = () => {
   const [previewItems, setPreviewItems] = useState<BasketFullDataItem[]>([]);

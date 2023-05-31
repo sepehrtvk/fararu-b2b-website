@@ -6,7 +6,7 @@ import {
   toLocaleCurrencyString,
   toLocaleNumberString,
 } from "../../../common/Localization";
-import Icon from "../../Icon/Icon";
+import Icon from "../../../components/Icon/Icon";
 
 type PreviewProductProps = {
   previewItem: BasketFullDataItem;

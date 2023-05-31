@@ -8,8 +8,8 @@ import { store } from "../../../store/store";
 import { checkout } from "../../../api/basket";
 import { finalize } from "rxjs";
 import { deleteBasket } from "../../../store/slices/basket";
-import notifyToast from "../../toast/toast";
-import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
+import notifyToast from "../../../components/toast/toast";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
