@@ -19,6 +19,7 @@ const Shop = () => {
   const [isLoadingMore, setIsLoadingMore] = useState(true);
 
   const [products, setProducts] = useState<ProductModel[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<ProductModel[]>([]);
   const [filtered, setFiltered] = useState({});
 
   const location = useLocation();
@@ -58,22 +59,6 @@ const Shop = () => {
     if (sortedProducts) setProducts(sortedProducts);
   };
 
-  const filterHandler = (event: any) => {
-    if (
-      event.target.name === "search" ||
-      event.target.name === "fromPrice" ||
-      event.target.name === "toPrice"
-    ) {
-      console.log(event);
-      setFiltered({ ...filtered, [event.target.name]: event.target.value });
-    } else {
-      setFiltered({
-        ...filtered,
-        [event.target.id.split(" ")[0]]: event.target.id.split(" ")[1],
-      });
-    }
-  };
-
   const runSearch = (skip: number) => {
     if (!products.length) setIsLoading(true);
     else setIsLoadingMore(true);
@@ -100,6 +85,10 @@ const Shop = () => {
     return () => subscription?.unsubscribe();
   };
 
+  const getFilteredProducts = (products: ProductModel[]) => {
+    setFilteredProducts(products);
+  };
+
   if (isLoading) return <LoadingSpinner />;
 
   return (
@@ -107,12 +96,18 @@ const Shop = () => {
       <div className={styles.shopPage}>
         <aside className={styles.filterContainer}>
           <div className={styles.fiter}>
-            <ShopFilter filtered={filtered} filterHandler={filterHandler} />
+            <ShopFilter
+              getFilteredProducts={getFilteredProducts}
+              products={products}
+            />
           </div>
         </aside>
         <main className={styles.mainContainer}>
           <ShopSort sortShopHandler={sortShopHandler} />
-          <ShopProducts products={products} isLoadingMore={isLoadingMore} />
+          <ShopProducts
+            products={filteredProducts.length > 0 ? filteredProducts : products}
+            isLoadingMore={isLoadingMore}
+          />
         </main>
       </div>
     </div>
