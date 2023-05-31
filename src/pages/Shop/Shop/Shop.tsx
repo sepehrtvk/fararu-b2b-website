@@ -8,6 +8,7 @@ import { getProducts } from "../../../api/product";
 import { finalize } from "rxjs";
 import notifyToast from "../../../components/toast/toast";
 import ShopSort from "../ShopSort/ShopSort";
+import ShopProducts from "../ShopProducts/ShopProducts";
 
 const Shop = () => {
   //   const categoryParams = useParams().category;
@@ -58,6 +59,8 @@ const Shop = () => {
     }
   };
 
+  if (isLoading) return <LoadingSpinner />;
+
   return (
     <div className='container'>
       <div className={styles.shopPage}>
@@ -68,15 +71,7 @@ const Shop = () => {
         </aside>
         <main className={styles.mainContainer}>
           <ShopSort />
-          <div className={newProducts.length > 0 ? styles.products : ""}>
-            {newProducts.length > 0 ? (
-              newProducts.map((product) => (
-                <ProductCard product={product} key={product.productId} />
-              ))
-            ) : (
-              <LoadingSpinner />
-            )}
-          </div>
+          <ShopProducts products={newProducts} />
         </main>
       </div>
     </div>
