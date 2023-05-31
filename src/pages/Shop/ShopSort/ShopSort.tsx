@@ -12,7 +12,7 @@ const ShopSort = ({ sortShopHandler }: ShopSortProps) => {
   const notActiveClass = "btn text-dark mx-1 py-2 px-3";
 
   useEffect(() => {
-    sortShopHandler(activeSortType);
+    if (activeSortType) sortShopHandler(activeSortType);
   }, [activeSortType]);
 
   return (
