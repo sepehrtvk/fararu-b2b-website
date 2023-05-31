@@ -15,7 +15,7 @@ const ShopProducts = ({ products }: ShopProductsProps) => {
     <div className={products.length > 0 ? styles.products : ""}>
       {products.length > 0 ? (
         products.map((product) => (
-          <ProductCard product={product} key={product.productId} />
+          <ProductCard key={product.productId} product={product} />
         ))
       ) : (
         <div className='d-flex justify-content-center'>

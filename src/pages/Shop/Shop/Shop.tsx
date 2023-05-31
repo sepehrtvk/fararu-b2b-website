@@ -7,7 +7,7 @@ import { ProductModel } from "../../../api/product/types";
 import { getProducts } from "../../../api/product";
 import { finalize } from "rxjs";
 import notifyToast from "../../../components/toast/toast";
-import ShopSort from "../ShopSort/ShopSort";
+import ShopSort, { ShopSortTypes } from "../ShopSort/ShopSort";
 import ShopProducts from "../ShopProducts/ShopProducts";
 
 const Shop = () => {
@@ -15,14 +15,7 @@ const Shop = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [products, setProducts] = useState<ProductModel[]>([]);
-  const [filtered, setFiltered] = useState({
-    sortBy: "date",
-    search: "",
-    category: "",
-    fromPrice: 0,
-    toPrice: 999999999,
-  });
-  let newProducts = products;
+  const [filtered, setFiltered] = useState({});
 
   useEffect(() => {
     const subscription = getProducts()
@@ -38,10 +31,31 @@ const Shop = () => {
     };
   }, []);
 
-  //Filters function
-  const shopFilterProducts = (state: any) => {};
+  const sortShopHandler = (sortType: ShopSortTypes) => {
+    const productsCopy = [...products];
+    let sortedProducts;
 
-  shopFilterProducts(filtered);
+    if (sortType == "topSell") {
+      sortedProducts = productsCopy.sort((p1, p2) =>
+        p1.finalPrice < p2.finalPrice
+          ? 1
+          : p1.finalPrice > p2.finalPrice
+          ? -1
+          : 0
+      );
+    }
+    if (sortType == "topNew") {
+      sortedProducts = productsCopy.sort((p1, p2) =>
+        p1.finalPrice > p2.finalPrice
+          ? 1
+          : p1.finalPrice < p2.finalPrice
+          ? -1
+          : 0
+      );
+    }
+
+    if (sortedProducts) setProducts(sortedProducts);
+  };
 
   const filterHandler = (event: any) => {
     if (
@@ -70,8 +84,8 @@ const Shop = () => {
           </div>
         </aside>
         <main className={styles.mainContainer}>
-          <ShopSort />
-          <ShopProducts products={newProducts} />
+          <ShopSort sortShopHandler={sortShopHandler} />
+          <ShopProducts products={products} />
         </main>
       </div>
     </div>
