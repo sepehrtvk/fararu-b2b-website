@@ -11,7 +11,7 @@ export type AuthFormField = {
   text: string;
   key: string;
   value?: string | undefined;
-  type: "text" | "password" | "select";
+  type: "text" | "password" | "select" | "number";
   selectOptions?: SelectOptions[];
   hasError: boolean;
   hasErrorMessage?: string | undefined;

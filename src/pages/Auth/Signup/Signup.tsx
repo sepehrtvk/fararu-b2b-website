@@ -148,7 +148,7 @@ const Signup = () => {
       text: "شماره همراه خود را وارد نمایید.",
       key: "شماره همراه",
       value: phoneValue,
-      type: "text",
+      type: "number",
       hasError: phoneHasError,
       hasErrorMessage: "شماره درست نیست",
       inputBlurHandler: phoneBlurHandler,
