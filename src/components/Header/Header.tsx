@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEventHandler, useEffect, useState } from "react";
 
 //Styles
 import styles from "./Header.module.css";
@@ -25,6 +25,7 @@ import ProductGroupItem from "./ProductGroupItem/ProductGroupItem";
 
 const Header = () => {
   const [menu, setMenu] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string | undefined>("");
   const [productGroupTwoLevel, setProductGroupTwoLevel] = useState<
     ProductGroupTwoLevelModel[]
   >([]);
@@ -58,6 +59,11 @@ const Header = () => {
     return () => subscription.unsubscribe();
   }, []);
 
+  const submitHandler = () => {
+    navigate("/shop", { state: searchQuery });
+    setSearchQuery("");
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
@@ -74,8 +80,20 @@ const Header = () => {
             <img width={"70px"} src={logo} alt='logo' />
           </div>
           <div className={styles.search}>
-            <input type='search' placeholder='جستجو در فروشگاه...' />
-            <button>
+            <input
+              type='search'
+              value={searchQuery}
+              placeholder='جستجو در فروشگاه...'
+              onChange={(event: any) => {
+                setSearchQuery(event.target.value);
+              }}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  submitHandler();
+                }
+              }}
+            />
+            <button onClick={submitHandler}>
               <img src={searchIcon} alt='search' />
             </button>
           </div>

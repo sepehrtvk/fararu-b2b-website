@@ -9,27 +9,28 @@ import { finalize } from "rxjs";
 import notifyToast from "../../../components/toast/toast";
 import ShopSort, { ShopSortTypes } from "../ShopSort/ShopSort";
 import ShopProducts from "../ShopProducts/ShopProducts";
+import { useLocation } from "react-router-dom";
+import usePageBottom from "../../../hooks/usePageBottom";
+
+const take: number = 12;
 
 const Shop = () => {
-  //   const categoryParams = useParams().category;
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(true);
 
   const [products, setProducts] = useState<ProductModel[]>([]);
   const [filtered, setFiltered] = useState({});
 
+  const location = useLocation();
+  const searchQuery = location.state as string;
+
+  const isPageBottom = usePageBottom();
+
   useEffect(() => {
-    const subscription = getProducts()
-      .pipe(finalize(() => setIsLoading(false)))
-      .subscribe({
-        next: setProducts,
-        error: (err) => {
-          notifyToast("error", { message: err.message });
-        },
-      });
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
+    if (searchQuery) runSearch(0);
+    if (isPageBottom) runSearch(products.length);
+    if (!isPageBottom && products.length == 0) runSearch(0);
+  }, [searchQuery, isPageBottom]);
 
   const sortShopHandler = (sortType: ShopSortTypes) => {
     const productsCopy = [...products];
@@ -37,9 +38,9 @@ const Shop = () => {
 
     if (sortType == "topSell") {
       sortedProducts = productsCopy.sort((p1, p2) =>
-        p1.finalPrice < p2.finalPrice
+        p1.consumerUnitPrice < p2.consumerUnitPrice
           ? 1
-          : p1.finalPrice > p2.finalPrice
+          : p1.consumerUnitPrice > p2.consumerUnitPrice
           ? -1
           : 0
       );
@@ -73,6 +74,32 @@ const Shop = () => {
     }
   };
 
+  const runSearch = (skip: number) => {
+    if (!products.length) setIsLoading(true);
+    else setIsLoadingMore(true);
+    const subscription = getProducts({
+      skip,
+      take,
+      searchQuery: searchQuery,
+    })
+      .pipe(
+        finalize(() => {
+          setIsLoading(false);
+          setIsLoadingMore(false);
+        })
+      )
+      .subscribe({
+        next: (items) => {
+          if (skip == 0) setProducts([...items]);
+          else setProducts([...products, ...items]);
+        },
+        error: (err) => {
+          notifyToast("error", { message: err.message });
+        },
+      });
+    return () => subscription?.unsubscribe();
+  };
+
   if (isLoading) return <LoadingSpinner />;
 
   return (
@@ -85,7 +112,7 @@ const Shop = () => {
         </aside>
         <main className={styles.mainContainer}>
           <ShopSort sortShopHandler={sortShopHandler} />
-          <ShopProducts products={products} />
+          <ShopProducts products={products} isLoadingMore={isLoadingMore} />
         </main>
       </div>
     </div>
