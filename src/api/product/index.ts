@@ -4,6 +4,7 @@ import { getOriginFromUrl } from "../../common/url";
 import { store } from "../../store/store";
 import {
   ProductBatchModel,
+  ProductBrandsModel,
   ProductGroupModel,
   ProductModel,
   ProductTypeId,
@@ -165,4 +166,9 @@ const appendOriginToImageUrl = (items: ProductGroupModel[], origin: string) => {
 export const getProductBatches = (productId: string) =>
   new Api().get<ProductBatchModel[]>("api/PolProductsNo/GetBatch", {
     query: { productId },
+  });
+
+export const getProductBrands = (options?: ProductsRequestOptions) =>
+  new Api().get<ProductBrandsModel[]>("api/PolProductsNo/GetBrand", {
+    query: options,
   });

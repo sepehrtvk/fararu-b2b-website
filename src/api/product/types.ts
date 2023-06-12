@@ -70,3 +70,7 @@ export interface ProductUnitModel {
   title: string;
   convertFactor: number;
 }
+export interface ProductBrandsModel {
+  brandName: string;
+  id: number;
+}

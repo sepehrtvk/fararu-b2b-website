@@ -34,7 +34,12 @@ const Shop = () => {
   }, [searchQuery, isPageBottom]);
 
   const sortShopHandler = (sortType: ShopSortTypes) => {
-    const productsCopy = [...products];
+    let productsCopy = [];
+    if (filteredProducts.length > 0) {
+      productsCopy = [...filteredProducts];
+    } else {
+      productsCopy = [...products];
+    }
     let sortedProducts;
 
     if (sortType == "topSell") {

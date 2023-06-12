@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ShopFilter.module.css";
 
 //icons
 import search from "../../../assets/img/search.svg";
 import { Checkbox, Switch } from "@mui/material";
-import { ProductModel } from "../../../api/product/types";
+import { ProductBrandsModel, ProductModel } from "../../../api/product/types";
 import Icon from "../../../components/Icon/Icon";
+import { getProductBrands } from "../../../api/product";
+import { finalize } from "rxjs";
+import notifyToast from "../../../components/toast/toast";
+import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 
 type FilterOptionType = {
   category?: string;
-  brandNames?: [{ key: string; value: boolean }];
+  brandNames?: string[];
   isAvailable?: boolean;
 };
 
@@ -21,28 +25,44 @@ type ShopFilterProps = {
 const ShopFilter = ({ getFilteredProducts, products }: ShopFilterProps) => {
   const [filterMenu, setFilterMenu] = useState(false);
   const [filterOptions, setFilterOptions] = useState<FilterOptionType>({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [brands, setBrands] = useState<ProductBrandsModel[]>([]);
+  const [activeBrands, setActiveBrands] = useState<ProductBrandsModel[]>([]);
 
   const filterMenuHandler = () => {
     setFilterMenu(!filterMenu);
   };
 
+  useEffect(() => {
+    setIsLoading(true);
+    getProductBrands()
+      .pipe(finalize(() => setIsLoading(false)))
+      .subscribe({
+        next: setBrands,
+        error: (err: Error) => {
+          notifyToast("error", { message: err.message });
+        },
+      });
+  }, []);
+
   const applyFilter = () => {
-    let filteredProducts: ProductModel[] = [];
+    let filteredProducts: ProductModel[] = [...products];
 
     //check product is available
     if (filterOptions.isAvailable) {
-      filteredProducts = products.filter((p) => p.onHandQty > 0);
+      filteredProducts = filteredProducts.filter((p) => p.onHandQty > 0);
     }
 
     //check brandNames selection
     if (filterOptions.brandNames) {
+      let tempProducts: ProductModel[] = [];
       filterOptions.brandNames.map((bn) => {
-        let tempProducts = filteredProducts.filter(
-          (p) => p.brandName == bn.key && bn.value
-        );
-        filteredProducts.push(...tempProducts);
+        const tempp = filteredProducts.filter((p) => p.brandName == bn);
+        tempProducts.push(...tempp);
       });
+      filteredProducts = tempProducts;
     }
+    console.log(filteredProducts);
 
     //check category selection
     if (filterOptions.category) {
@@ -53,6 +73,44 @@ const ShopFilter = ({ getFilteredProducts, products }: ShopFilterProps) => {
 
     getFilteredProducts(filteredProducts);
   };
+
+  const renderBrands = () => {
+    return (
+      <div className='mt-1' style={{ maxHeight: "200px", overflow: "scroll" }}>
+        {brands.map((brandItem) => {
+          return (
+            <div key={brandItem.id} className='d-flex align-items-center '>
+              <Checkbox
+                onClick={() => {
+                  const activeIndex = activeBrands.findIndex(
+                    (ab) => ab.id == brandItem.id
+                  );
+                  const activeBrandsCopy = [...activeBrands];
+
+                  if (activeIndex > -1) {
+                    activeBrandsCopy.splice(activeIndex, 1);
+                    setActiveBrands(activeBrandsCopy);
+                  } else {
+                    setActiveBrands([...activeBrands, brandItem]);
+                    activeBrandsCopy.push(brandItem);
+                  }
+                  setFilterOptions({
+                    ...filterOptions,
+                    brandNames: activeBrandsCopy.map((ab) => ab.brandName),
+                  });
+                }}
+              />
+              <div className='flex-fill d-flex align-items-center justify-content-between'>
+                <span className='text-dark'>{brandItem.brandName}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <>
@@ -70,6 +128,26 @@ const ShopFilter = ({ getFilteredProducts, products }: ShopFilterProps) => {
                   });
                 }}>
                 شامپو بزرگسال
+              </li>
+              <li
+                id='2'
+                onClick={() => {
+                  setFilterOptions({
+                    ...filterOptions,
+                    category: "پودر لباسشویی",
+                  });
+                }}>
+                پودر لباسشویی
+              </li>
+              <li
+                id='3'
+                onClick={() => {
+                  setFilterOptions({
+                    ...filterOptions,
+                    category: "محصولات ماشین ظرفشویی",
+                  });
+                }}>
+                محصولات ماشین ظرفشویی
               </li>
             </ul>
           </div>
@@ -98,20 +176,8 @@ const ShopFilter = ({ getFilteredProducts, products }: ShopFilterProps) => {
             />
             <img src={search} alt='search' className={styles.searchIcon} />
           </div>
-          <div className='d-flex align-items-center '>
-            <Checkbox checked={true} />
-            <div className='flex-fill d-flex align-items-center justify-content-between'>
-              <span className='text-dark'>پرسیل</span>
-              <span className='text-info'>Persil</span>
-            </div>
-          </div>
-          <div className='d-flex align-items-center '>
-            <Checkbox checked={false} />
-            <div className='flex-fill d-flex align-items-center justify-content-between'>
-              <span className='text-dark'>پرسیل</span>
-              <span className='text-info'>Persil</span>
-            </div>
-          </div>
+
+          {renderBrands()}
         </div>
 
         <div className='d-flex align-items-center'>
