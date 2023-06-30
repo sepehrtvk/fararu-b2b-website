@@ -23,7 +23,15 @@ const Shop = () => {
   const [filtered, setFiltered] = useState({});
 
   const location = useLocation();
-  const searchQuery = location.state as string;
+
+  let searchQuery = "";
+  let groupQuery = "";
+
+  if (location.state && location.state.menuItemId) {
+    groupQuery = location.state.menuItemId as string;
+  } else {
+    searchQuery = location.state as string;
+  }
 
   const isPageBottom = usePageBottom();
 
@@ -70,7 +78,8 @@ const Shop = () => {
     const subscription = getProducts({
       skip,
       take,
-      searchQuery: searchQuery,
+      searchQuery: searchQuery ? searchQuery : undefined,
+      menuItemId: groupQuery ? groupQuery : undefined,
     })
       .pipe(
         finalize(() => {

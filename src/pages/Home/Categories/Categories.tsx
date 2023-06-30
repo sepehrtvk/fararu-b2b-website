@@ -9,6 +9,7 @@ import { getProductGroups } from "../../../api/product";
 import noImage from "../../../assets/img/no-image.jpeg";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import { finalize } from "rxjs";
+import { useNavigate } from "react-router-dom";
 
 const Categories = () => {
   const [productGroupTwoLevel, setProductGroupTwoLevel] = useState<
@@ -17,6 +18,7 @@ const Categories = () => {
 
   const [activeCategory, setActiveCategory] = useState<string | undefined>("");
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const subscription = getProductGroups()
@@ -82,6 +84,9 @@ const Categories = () => {
         return (
           <div
             key={item?.id}
+            onClick={() => {
+              navigate("/shop", { state: { menuItemId: item.id } });
+            }}
             className='d-flex flex-column align-items-center  mx-4'>
             <img
               className='bg-light p-3 rounded-circle'
