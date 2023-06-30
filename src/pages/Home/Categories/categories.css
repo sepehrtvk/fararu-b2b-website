@@ -1,0 +1,19 @@
+.hoverGroup:hover img {
+  /* width: 220px; */
+  cursor: pointer;
+  transform: translateY(-10px);
+  transition: all 0.2s ease-in;
+}
+
+.hoverGroup:hover span {
+  cursor: pointer;
+  transform: translateY(-10px);
+  font-weight: bold;
+  color: #ff3f3f;
+  transition: all 0.2s ease-in;
+}
+
+.hoverGroup img,
+.hoverGroup span {
+  transition: all 0.2s ease-in;
+}

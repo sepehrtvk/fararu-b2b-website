@@ -33,8 +33,6 @@ const Shop = () => {
     searchQuery = location.state as string;
   }
 
-  console.log(groupQuery);
-
   const isPageBottom = usePageBottom();
 
   useEffect(() => {
