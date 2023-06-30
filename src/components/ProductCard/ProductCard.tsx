@@ -14,40 +14,44 @@ const ProductCard = ({ product }: ProductScreenProps) => {
 
   return (
     <div className='card rounded-4 border-0'>
-      <div className='card-body p-0'>
-        <div
-          className='text-center bg-light2 p-4 rounded-4'
-          style={{ cursor: "pointer" }}
-          onClick={() => {
-            navigate("/product", { state: product });
-          }}>
-          {!product.image || product.image.includes("///") ? (
-            <img
-              src={noImage}
-              className='img-fluid rounded-4'
-              alt='photo'
-              style={{ height: "220px" }}
-            />
-          ) : (
-            product.image && (
+      <div className='card-body p-0 d-flex flex-column justify-content-between'>
+        <div>
+          <div
+            className='text-center bg-light2 p-4 rounded-4'
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              navigate("/product", { state: product });
+            }}>
+            {!product.image || product.image.includes("///") ? (
               <img
-                src={product.image}
+                src={noImage}
                 className='img-fluid rounded-4'
                 alt='photo'
                 style={{ height: "220px" }}
               />
-            )
-          )}
+            ) : (
+              product.image && (
+                <img
+                  src={product.image}
+                  className='img-fluid rounded-4'
+                  alt='photo'
+                  style={{ height: "220px" }}
+                />
+              )
+            )}
+          </div>
+          <div className='mt-3'>
+            <span className={styles.productName}>{product.name}</span>
+          </div>
         </div>
-        <div className='mt-3'>
-          <span className={styles.productName}>{product.name}</span>
-        </div>
-        <div className='d-flex justify-content-between align-items-center mt-3 px-1'>
-          <AddToBasket product={product} vertical />
-          <PriceBadge
-            highPrice={product.finalPrice}
-            lowPrice={product.consumerUnitPrice}
-          />
+        <div className='d-flex flex-column justify-content-between'>
+          <div className='d-flex justify-content-between align-items-center mt-3 px-1'>
+            <AddToBasket product={product} vertical />
+            <PriceBadge
+              highPrice={product.finalPrice}
+              lowPrice={product.consumerUnitPrice}
+            />
+          </div>
         </div>
       </div>
     </div>
