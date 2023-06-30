@@ -71,6 +71,8 @@ const ShopFilter = ({ getFilteredProducts, products }: ShopFilterProps) => {
       );
     }
 
+    filterMenuHandler();
+
     getFilteredProducts(filteredProducts);
   };
 
@@ -114,7 +116,8 @@ const ShopFilter = ({ getFilteredProducts, products }: ShopFilterProps) => {
 
   return (
     <>
-      <div className={filterMenu ? styles.filterOpen : "mt-5"}>
+      <div
+        className={filterMenu ? styles.filterOpen : "mt-5 d-none d-md-block"}>
         <div className={styles.field}>
           <p className='fs-5'>دسته بندی نتایج </p>
           <div className={styles.category}>
@@ -152,19 +155,6 @@ const ShopFilter = ({ getFilteredProducts, products }: ShopFilterProps) => {
             </ul>
           </div>
         </div>
-
-        <div className={styles.field}>
-          <p className='fs-5'>جستجو </p>
-          <div className={styles.searchBox}>
-            <input
-              type='text'
-              className={styles.search}
-              name='search'
-              placeholder='نام محصول مورد نظر'
-            />
-            <img src={search} alt='search' className={styles.searchIcon} />
-          </div>
-        </div>
         <div className={styles.field}>
           <p className='fs-5'>برند </p>
           <div className={styles.searchBox}>
@@ -176,10 +166,8 @@ const ShopFilter = ({ getFilteredProducts, products }: ShopFilterProps) => {
             />
             <img src={search} alt='search' className={styles.searchIcon} />
           </div>
-
           {renderBrands()}
         </div>
-
         <div className='d-flex align-items-center'>
           <Switch
             value={filterOptions.isAvailable}
@@ -192,17 +180,18 @@ const ShopFilter = ({ getFilteredProducts, products }: ShopFilterProps) => {
           />
           <span>فقط کالاهای موجود</span>
         </div>
-      </div>
-      <div>
-        <span
-          className='btn btn-primary w-100 rounded-3 text-white mt-4 d-flex justify-content-center'
-          onClick={applyFilter}>
-          <span>
-            <Icon name='filter-square' size={5} color='white' />
+        <div>
+          <span
+            className='btn btn-primary w-100 rounded-3 text-white mt-4 d-flex justify-content-center'
+            onClick={applyFilter}>
+            <span>
+              <Icon name='filter-square' size={5} color='white' />
+            </span>
+            <span className='me-3'> اعمال فیلتر</span>
           </span>
-          <span className='me-3'> اعمال فیلتر</span>
-        </span>
+        </div>
       </div>
+
       <div className={styles.buttonFilter} onClick={filterMenuHandler}>
         <div>
           فیلتر
