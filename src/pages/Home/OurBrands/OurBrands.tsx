@@ -1,10 +1,11 @@
 import React from "react";
 
 //Brands icon
-import adidas from "../../../assets/img/adidas.svg";
-import nike from "../../../assets/img/nike.svg";
-import puma from "../../../assets/img/puma.svg";
-import zara from "../../../assets/img/zara.svg";
+import pril from "../../../assets/brands/pril.png";
+import persil from "../../../assets/brands/persil.png";
+import shawma from "../../../assets/brands/shawma.png";
+import tazh from "../../../assets/brands/tazh.png";
+import saaf from "../../../assets/brands/saaf.png";
 
 //Styles
 import styles from "./OurBrands.module.css";
@@ -21,16 +22,19 @@ const OurBrands = () => {
       </div>
       <div className={styles.brands}>
         <div className={styles.image}>
-          <img src={adidas} alt='brands' />
+          <img src={pril} alt='brands' />
         </div>
         <div className={styles.image}>
-          <img src={zara} alt='brands' />
+          <img src={persil} alt='brands' />
         </div>
         <div className={styles.image}>
-          <img src={puma} alt='brands' />
+          <img src={shawma} alt='brands' />
         </div>
         <div className={styles.image}>
-          <img src={nike} alt='brands' />
+          <img src={tazh} alt='brands' />
+        </div>
+        <div className={styles.image}>
+          <img src={saaf} alt='brands' />
         </div>
       </div>
     </div>
