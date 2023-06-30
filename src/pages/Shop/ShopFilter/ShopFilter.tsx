@@ -4,9 +4,14 @@ import styles from "./ShopFilter.module.css";
 //icons
 import search from "../../../assets/img/search.svg";
 import { Checkbox, Switch } from "@mui/material";
-import { ProductBrandsModel, ProductModel } from "../../../api/product/types";
+import {
+  ProductBrandsModel,
+  ProductGroupModel,
+  ProductGroupTwoLevelModel,
+  ProductModel,
+} from "../../../api/product/types";
 import Icon from "../../../components/Icon/Icon";
-import { getProductBrands } from "../../../api/product";
+import { getProductBrands, getProductGroups } from "../../../api/product";
 import { finalize } from "rxjs";
 import notifyToast from "../../../components/toast/toast";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
@@ -28,6 +33,10 @@ const ShopFilter = ({ getFilteredProducts, products }: ShopFilterProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [brands, setBrands] = useState<ProductBrandsModel[]>([]);
   const [activeBrands, setActiveBrands] = useState<ProductBrandsModel[]>([]);
+  const [productGroupTwoLevel, setProductGroupTwoLevel] = useState<
+    ProductGroupTwoLevelModel[]
+  >([]);
+  const [activeCategory, setActiveCategory] = useState<string | undefined>("");
 
   const filterMenuHandler = () => {
     setFilterMenu(!filterMenu);
@@ -43,6 +52,33 @@ const ShopFilter = ({ getFilteredProducts, products }: ShopFilterProps) => {
           notifyToast("error", { message: err.message });
         },
       });
+  }, []);
+
+  useEffect(() => {
+    const subscription = getProductGroups()
+      .pipe(finalize(() => setIsLoading(false)))
+      .subscribe({
+        next: (tree: ProductGroupModel[]) => {
+          const productGroupTwoLevelTemp: ProductGroupTwoLevelModel[] = [];
+          if (tree[0].submenus) {
+            tree[0].submenus.map((row) => {
+              row.submenus?.map((sub) => {
+                const temp: ProductGroupTwoLevelModel = {
+                  firstLevel: null,
+                  secondLevel: [],
+                };
+                temp.firstLevel = sub;
+                if (sub.submenus) temp.secondLevel = sub.submenus;
+
+                productGroupTwoLevelTemp.push(temp);
+              });
+            });
+            setProductGroupTwoLevel(productGroupTwoLevelTemp);
+          }
+        },
+        error: () => {},
+      });
+    return () => subscription.unsubscribe();
   }, []);
 
   const applyFilter = () => {
@@ -62,16 +98,17 @@ const ShopFilter = ({ getFilteredProducts, products }: ShopFilterProps) => {
       });
       filteredProducts = tempProducts;
     }
-    console.log(filteredProducts);
 
     //check category selection
     if (filterOptions.category) {
-      filteredProducts = filteredProducts.filter(
-        (p) => p.productGroupName == filterOptions.category
-      );
+      filteredProducts = filteredProducts.filter((p) => {
+        if (filterOptions.category)
+          return p.productGroupPathName.includes(filterOptions.category);
+        else return false;
+      });
     }
 
-    filterMenuHandler();
+    // filterMenuHandler();
 
     getFilteredProducts(filteredProducts);
   };
@@ -122,36 +159,26 @@ const ShopFilter = ({ getFilteredProducts, products }: ShopFilterProps) => {
           <p className='fs-5'>دسته بندی نتایج </p>
           <div className={styles.category}>
             <ul>
-              <li
-                id='1'
-                onClick={() => {
-                  setFilterOptions({
-                    ...filterOptions,
-                    category: "شامپو بزرگسال",
-                  });
-                }}>
-                شامپو بزرگسال
-              </li>
-              <li
-                id='2'
-                onClick={() => {
-                  setFilterOptions({
-                    ...filterOptions,
-                    category: "پودر لباسشویی",
-                  });
-                }}>
-                پودر لباسشویی
-              </li>
-              <li
-                id='3'
-                onClick={() => {
-                  setFilterOptions({
-                    ...filterOptions,
-                    category: "محصولات ماشین ظرفشویی",
-                  });
-                }}>
-                محصولات ماشین ظرفشویی
-              </li>
+              {productGroupTwoLevel.map((p2level, index) => {
+                return (
+                  <li
+                    className={
+                      activeCategory == p2level.firstLevel?.title
+                        ? "fw-bold text-primary"
+                        : "text-dark"
+                    }
+                    id={(index + 1).toString()}
+                    onClick={() => {
+                      setFilterOptions({
+                        ...filterOptions,
+                        category: p2level.firstLevel?.title,
+                      });
+                      setActiveCategory(p2level.firstLevel?.title);
+                    }}>
+                    {p2level.firstLevel?.title}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
