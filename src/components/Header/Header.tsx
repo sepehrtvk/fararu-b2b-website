@@ -39,20 +39,20 @@ const Header = () => {
       next: (tree: ProductGroupModel[]) => {
         const productGroupTwoLevelTemp: ProductGroupTwoLevelModel[] = [];
 
-        tree.map((row) => {
-          row.submenus?.map((sub) => {
-            const temp: ProductGroupTwoLevelModel = {
-              firstLevel: null,
-              secondLevel: [],
-            };
-            // if (sub.nLevel == 1) {
-            temp.firstLevel = sub;
-            if (sub.submenus) temp.secondLevel = sub.submenus;
-            //}
-            productGroupTwoLevelTemp.push(temp);
+        if (tree[0].submenus) {
+          tree[0].submenus.map((row) => {
+            row.submenus?.map((sub) => {
+              const temp: ProductGroupTwoLevelModel = {
+                firstLevel: null,
+                secondLevel: [],
+              };
+              temp.firstLevel = sub;
+              if (sub.submenus) temp.secondLevel = sub.submenus;
+              productGroupTwoLevelTemp.push(temp);
+            });
           });
-        });
-        setProductGroupTwoLevel(productGroupTwoLevelTemp);
+          setProductGroupTwoLevel(productGroupTwoLevelTemp);
+        }
       },
       error: () => {},
     });

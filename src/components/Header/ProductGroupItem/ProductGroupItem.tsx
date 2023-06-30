@@ -4,6 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { ProductGroupTwoLevelModel } from "../../../api/product/types";
 import Icon from "../../Icon/Icon";
+import { useNavigate } from "react-router-dom";
 
 type ProductGroupItemProps = {
   productGroupTwoLevel: ProductGroupTwoLevelModel;
@@ -11,6 +12,7 @@ type ProductGroupItemProps = {
 
 const ProductGroupItem = ({ productGroupTwoLevel }: ProductGroupItemProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -45,7 +47,15 @@ const ProductGroupItem = ({ productGroupTwoLevel }: ProductGroupItemProps) => {
             "aria-labelledby": "basic-button",
           }}>
           {productGroupTwoLevel.secondLevel?.map((sub) => {
-            return <MenuItem onClick={handleClose}>{sub.title}</MenuItem>;
+            return (
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  navigate("/shop", { state: { menuItemId: sub.id } });
+                }}>
+                {sub.title}
+              </MenuItem>
+            );
           })}
         </Menu>
       ) : null}

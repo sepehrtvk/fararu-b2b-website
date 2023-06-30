@@ -33,13 +33,15 @@ const Shop = () => {
     searchQuery = location.state as string;
   }
 
+  console.log(groupQuery);
+
   const isPageBottom = usePageBottom();
 
   useEffect(() => {
-    if (searchQuery) runSearch(0);
+    if (searchQuery || groupQuery) runSearch(0);
     if (isPageBottom) runSearch(products.length);
     if (!isPageBottom && products.length == 0) runSearch(0);
-  }, [searchQuery, isPageBottom]);
+  }, [searchQuery, groupQuery, isPageBottom]);
 
   const sortShopHandler = (sortType: ShopSortTypes) => {
     let productsCopy = [];
