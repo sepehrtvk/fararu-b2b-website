@@ -17,10 +17,12 @@ import SwiperComponent from "../../../components/Swiper/SwiperComponent";
 import Icon from "../../../components/Icon/Icon";
 import { finalize } from "rxjs";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
+import { useNavigate } from "react-router-dom";
 
 const SpecialOffers = () => {
   const [specialPro, setspecialPro] = useState<ProductModel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const subscription = getProducts()
@@ -46,7 +48,11 @@ const SpecialOffers = () => {
           <Icon name='lightning-charge' size={2} color='primary' />
           <h3 className='fw-bold me-2 mb-0'>پیشنهادات ویژه</h3>
         </div>
-        <div className='btn btn-light d-flex'>
+        <div
+          className='btn btn-light d-flex'
+          onClick={() => {
+            navigate("/shop");
+          }}>
           <span className='ms-2'>موارد بیشتر</span>
           <span>
             <Icon name='arrow-left-short' size={5} color='black' />
