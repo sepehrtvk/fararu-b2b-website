@@ -33,30 +33,37 @@ const Banners = () => {
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <Swiper
-      className='slider mb-5'
-      modules={[Autoplay, Navigation, Pagination]}
-      spaceBetween={0}
-      slidesPerView={1}
-      loop={true}
-      centeredSlides={true}
-      autoplay={{
-        delay: 2500,
-        disableOnInteraction: false,
-      }}
-      navigation
-      pagination={{ clickable: true }}>
-      {banners.map((banner) => (
-        <SwiperSlide>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <img src={banner.image} className={styles.image} alt='slider' />
-          </div>
-          <p style={{ textAlign: "center", paddingTop: "10px" }}>
-            {banner.title}
-          </p>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <div className='container'>
+      <Swiper
+        className='slider mb-5'
+        modules={[Autoplay, Navigation, Pagination]}
+        spaceBetween={0}
+        slidesPerView={1}
+        loop={true}
+        centeredSlides={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        navigation
+        pagination={{ clickable: true }}>
+        {banners.map((banner) => (
+          <SwiperSlide>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <img src={banner.image} className={styles.image} alt='slider' />
+            </div>
+            <p
+              style={{
+                textAlign: "center",
+                paddingTop: "10px",
+                paddingBottom: "15px",
+              }}>
+              {banner.title}
+            </p>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
   );
 };
 
