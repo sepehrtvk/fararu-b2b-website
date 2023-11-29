@@ -4,7 +4,10 @@ import jwt_decode from "jwt-decode";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { getUserInfo, getUserOdata } from "../../../api/user";
 import notifyToast from "../../../components/toast/toast";
-import { toLocaleDateString } from "../../../common/Localization";
+import {
+  toLocaleDateString,
+  toLocaleNumberString,
+} from "../../../common/Localization";
 import TextInput from "../../../components/TextInput/TextInput";
 import { getCustomerProfile, postCustomerProfile } from "../../../api/customer";
 import { finalize } from "rxjs";
@@ -14,6 +17,8 @@ import { setCustomer } from "../../../store/slices/customer";
 import { useNavigate } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import Skeleton from "@mui/material/Skeleton";
+import Map from "../../../components/Map/Map";
+import Icon from "../../../components/Icon/Icon";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -39,7 +44,7 @@ const Profile = () => {
   const [lng, setLng] = useState<number | null>();
   const [customerGroupName, setCustomerGroupName] = useState<string | null>();
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [draggable, setDraggable] = useState<boolean>(false);
 
   let userId: number | null = null;
   const { token, username } = useAppSelector((store) => store.user);
@@ -66,6 +71,20 @@ const Profile = () => {
         setLongitude(profile?.longitude);
         setCustomerGroupName(profile?.customerGroupName);
 
+        if (profile) {
+          // setIsButtonDisabled(true);
+          // setLat(latitude);
+          // setLng(longitude);
+          setCurrentLocation();
+        } else {
+          if (AppConfig.userLocation) {
+            setCurrentLocation();
+          } else {
+            setLat(35.9166371);
+            setLng(52.0997499);
+          }
+        }
+
         if (userId) {
           getUserOdata(userId)
             .pipe(finalize(() => setLoading(false)))
@@ -80,17 +99,6 @@ const Profile = () => {
                 notifyToast("error", { message: err.message });
               },
             });
-        }
-
-        if (profile) {
-          setIsButtonDisabled(true);
-        } else {
-          if (AppConfig.userLocation) {
-            setCurrentLocation();
-          } else {
-            setLat(35.9166371);
-            setLng(52.0997499);
-          }
         }
       },
       error: (err: Error) => {
@@ -125,7 +133,7 @@ const Profile = () => {
   };
 
   const submitHandler = () => {
-    if (isButtonDisabled) return;
+    // if (isButtonDisabled) return;
 
     let request: CustomerProfileCollection = {};
 
@@ -276,6 +284,50 @@ const Profile = () => {
           />
           <Skeleton variant='rounded' width={210} height={60} />
         </Stack>
+      );
+  };
+
+  const renderButtonSection = () => {
+    if (!draggable)
+      return (
+        <div>
+          <button
+            onClick={() => {
+              if (isButtonDisabled)
+                notifyToast("error", {
+                  message: "موقعیت مشتری قبلا انتخاب شده است",
+                });
+              else setDraggable(true);
+            }}
+            type='button'
+            className='btn btn-dark text-white rounded my-2 d-flex'>
+            <Icon name='pin-map' size={5} color='white' />
+            <span className='me-2'>انتخاب موفقیت مشتری</span>
+          </button>
+        </div>
+      );
+    else
+      return (
+        <div className='d-flex align-items-center'>
+          <button
+            onClick={() => {
+              setDraggable(false);
+            }}
+            type='button'
+            className='btn btn-primary text-white rounded my-2 d-flex'>
+            <Icon name='send-check-fill' size={5} color='white' />
+            <span className='me-2'>ثبت موفقیت</span>
+          </button>
+          {/* <button
+            onClick={() => {
+              setDraggable(false);
+            }}
+            type='button'
+            className='btn btn-light2 rounded my-2 d-flex me-2'>
+            <Icon name='send-x' size={5} color='black' />
+            <span className='me-2'>انصراف</span>
+          </button> */}
+        </div>
       );
   };
 
@@ -521,10 +573,29 @@ const Profile = () => {
               </div>
             )}
 
+            <div className='col-12'>
+              {lat && lng && (
+                <>
+                  {renderButtonSection()}
+                  <Map
+                    draggable={draggable}
+                    customerCode={
+                      customerCode ? toLocaleNumberString(customerCode) : ""
+                    }
+                    center={[lat, lng]}
+                    getCurrentPosition={(latLng) => {
+                      setLat(latLng.lat);
+                      setLng(latLng.lng);
+                    }}
+                  />
+                </>
+              )}
+            </div>
+
             <div className='col-12 mt-4 pb-4 border-top'>
               <div className='d-flex'>
                 <button
-                  disabled={isButtonDisabled}
+                  // disabled={isButtonDisabled}
                   type='submit'
                   className='btn btn-primary text-white rounded-3 mt-4'
                   onClick={submitHandler}>
