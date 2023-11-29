@@ -8,13 +8,34 @@ import Footer from "./components/Footer/Footer";
 import ProductPage from "./pages/Product/ProductPage";
 import Cart from "./pages/Cart/Cart/Cart";
 import Preview from "./pages/Preview/Preview/Preview";
-import { useAppSelector } from "./store/hooks";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { store } from "./store/store";
 import Signup from "./pages/Auth/Signup/Signup";
 import Shop from "./pages/Shop/Shop/Shop";
+import Profile from "./pages/Options/Profile/Profile";
+import Cardex from "./pages/Options/Cardex/Cardex";
+import OrderHistory from "./pages/Options/OrderHistory/OrderHistory";
+import { useEffect } from "react";
+import { getPolGeneralConfig } from "./api/customer";
+import { setGeneralConfig } from "./store/slices/config";
+import notifyToast from "./components/toast/toast";
 
 function App() {
   const isLoggedIn = !!useAppSelector((store) => store.user.token);
+  const { token } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (token)
+      getPolGeneralConfig().subscribe({
+        next: (result) => {
+          dispatch(setGeneralConfig(result));
+        },
+        error: (err: Error) => {
+          notifyToast("error", { message: err.message });
+        },
+      });
+  }, [token]);
 
   if (!isLoggedIn) {
     return (
@@ -35,6 +56,9 @@ function App() {
           <Route path='/product' element={<ProductPage />} />
           <Route path='/preview' element={<Preview />} />
           <Route path='/cart' element={<Cart />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/cardex' element={<Cardex />} />
+          <Route path='/orderHistory' element={<OrderHistory />} />
           <Route path='/home' element={<Home />} />
           <Route path='*' element={<Navigate to='/home' />} />
         </Routes>

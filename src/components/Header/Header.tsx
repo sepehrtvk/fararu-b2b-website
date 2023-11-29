@@ -22,6 +22,7 @@ import {
   ProductGroupTwoLevelModel,
 } from "../../api/product/types";
 import ProductGroupItem from "./ProductGroupItem/ProductGroupItem";
+import DropDown from "../DropDown/DropDown";
 
 const Header = () => {
   const [menu, setMenu] = useState(false);
@@ -98,7 +99,7 @@ const Header = () => {
             </button>
           </div>
           <div className={styles.buttons}>
-            {isLoggedIn ? (
+            {/* {isLoggedIn ? (
               <button
                 className='btn btn-light2 ms-2'
                 onClick={() => {
@@ -117,10 +118,10 @@ const Header = () => {
                 }}>
                 ورود | ثبت نام
               </button>
-            )}
+            )} */}
 
             <button
-              className='btn btn-light2 position-relative'
+              className='btn btn-light2 position-relative ms-2'
               onClick={() => {
                 navigate("/cart");
               }}>
@@ -132,6 +133,39 @@ const Header = () => {
                 </span>
               )}
             </button>
+
+            <DropDown
+              title='نام'
+              options={[
+                {
+                  text: "پروفایل",
+                  onClick: () => {
+                    navigate("/profile");
+                  },
+                },
+                {
+                  text: "کاردکس مشتری",
+                  onClick: () => {
+                    navigate("/cardex");
+                  },
+                },
+                {
+                  text: "سابقه خرید",
+                  onClick: () => {
+                    navigate("/orderHistory");
+                  },
+                },
+                {
+                  text: "خروج",
+                  onClick: () => {
+                    dispatch(logout());
+                    dispatch(clearCustomer());
+                    dispatch(deleteBasket());
+                    navigate("/login");
+                  },
+                },
+              ]}
+            />
           </div>
         </div>
       </div>
