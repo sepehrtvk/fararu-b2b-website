@@ -1,6 +1,7 @@
 import React, { EventHandler } from "react";
 import logo from "../../../assets/img/logo.png";
 import TermsModal from "../TermsModal/TermsModal";
+import Button from "../../../components/Button/Button";
 
 export type SelectOptions = {
   name: string;
@@ -25,7 +26,8 @@ type AuthFormProps = {
   buttonTitle: string;
   buttonClickHandler: (event: any) => void;
   secondButtonTitle?: string;
-  secondButtonClickHandler?: (event: any) => void;
+  isLoading?: boolean;
+  secondButtonClickHandler?: () => void;
 };
 
 const AuthForm = ({
@@ -35,6 +37,7 @@ const AuthForm = ({
   buttonClickHandler,
   secondButtonTitle,
   secondButtonClickHandler,
+  isLoading,
 }: AuthFormProps) => {
   const renderField = (field: AuthFormField) => {
     return (
@@ -91,17 +94,21 @@ const AuthForm = ({
               return renderField(field);
             })}
 
-            <button
+            <Button
+              loading={isLoading}
               type='submit'
-              className='btn btn-primary text-white rounded-3 w-100 mt-4'>
-              {buttonTitle}
-            </button>
+              label={buttonTitle}
+              className={
+                "btn-primary text-white rounded-3 w-100 mt-4 d-flex justify-content-center"
+              }
+            />
             {secondButtonTitle && (
-              <button
-                className='btn btn-outline-primary rounded-3 w-100 mt-2'
-                onClick={secondButtonClickHandler}>
-                {secondButtonTitle}
-              </button>
+              <Button
+                disabled={isLoading}
+                label={secondButtonTitle}
+                className='btn-outline-primary rounded-3 w-100 mt-2'
+                onClickHandler={secondButtonClickHandler}
+              />
             )}
           </form>
           <TermsModal />

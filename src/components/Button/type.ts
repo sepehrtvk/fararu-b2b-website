@@ -4,5 +4,5 @@ export interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   type?: "button" | "submit" | "reset" | undefined;
-  onClickHandler: () => void;
+  onClickHandler?: () => void;
 }

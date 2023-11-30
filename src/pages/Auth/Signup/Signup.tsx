@@ -305,7 +305,7 @@ const Signup = () => {
     }
   };
 
-  if (isLoading) return <LoadingSpinner maxHeight />;
+  // if (isLoading) return <LoadingSpinner maxHeight />;
 
   return (
     <AuthForm
@@ -317,6 +317,7 @@ const Signup = () => {
       secondButtonClickHandler={() => {
         navigate("/login");
       }}
+      isLoading={isLoading}
     />
   );
 };
