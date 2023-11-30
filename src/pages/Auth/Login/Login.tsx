@@ -95,8 +95,12 @@ const Login = () => {
           },
         });
     } else if (step == "code") {
-      setIsLoading(false);
+      setIsLoading(true);
       if (!codeIsValid) {
+        setIsLoading(false);
+        dispatch(clearError());
+        dispatch(clearCustomer());
+
         return;
       }
 
@@ -108,8 +112,10 @@ const Login = () => {
         dispatch(loginByCodeStart({ mobile: phoneValue, code: codeValue }));
       }
 
-      if (loginError) notifyToast("error", { message: loginError });
-      else
+      if (loginError) {
+        notifyToast("error", { message: loginError });
+        setIsLoading(false);
+      } else
         setTimeout(() => {
           navigate("/home");
         }, 0);

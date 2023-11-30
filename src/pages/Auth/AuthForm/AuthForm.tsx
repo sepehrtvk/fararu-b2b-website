@@ -2,6 +2,7 @@ import React, { EventHandler } from "react";
 import logo from "../../../assets/img/logo.png";
 import TermsModal from "../TermsModal/TermsModal";
 import Button from "../../../components/Button/Button";
+import OTPinput from "../../../components/OTPinput/OTPinput";
 
 export type SelectOptions = {
   name: string;
@@ -40,43 +41,53 @@ const AuthForm = ({
   isLoading,
 }: AuthFormProps) => {
   const renderField = (field: AuthFormField) => {
-    return (
-      <div key={field.key} className='mb-3'>
-        <label htmlFor={field.text} className='form-label textJustify'>
-          {field.text}
-        </label>
-        {field.type == "select" ? (
-          <select
-            className='form-select'
-            aria-label='select'
-            onChange={field.valueChangeHandler}>
-            <option> انتخاب کنید</option>
-            {field.selectOptions &&
-              field.selectOptions.map((option) => {
-                return (
-                  <option key={option.id} value={option.id}>
-                    {option.name}
-                  </option>
-                );
-              })}
-          </select>
-        ) : (
-          <input
-            type={field.type}
-            className='form-control'
-            placeholder={field.key}
-            id={field.text}
-            value={field.value}
-            onChange={field.valueChangeHandler}
-            onBlur={field.inputBlurHandler}
-          />
-        )}
+    if (field.key == "کد")
+      return (
+        <div>
+          <OTPinput label={field.text} getCode={field.valueChangeHandler} />
+          {field.hasError && (
+            <div className='form-text text-danger'>{field.hasErrorMessage}</div>
+          )}
+        </div>
+      );
+    else
+      return (
+        <div key={field.key} className='mb-3'>
+          <label htmlFor={field.text} className='form-label textJustify'>
+            {field.text}
+          </label>
+          {field.type == "select" ? (
+            <select
+              className='form-select'
+              aria-label='select'
+              onChange={field.valueChangeHandler}>
+              <option> انتخاب کنید</option>
+              {field.selectOptions &&
+                field.selectOptions.map((option) => {
+                  return (
+                    <option key={option.id} value={option.id}>
+                      {option.name}
+                    </option>
+                  );
+                })}
+            </select>
+          ) : (
+            <input
+              type={field.type}
+              className='form-control'
+              placeholder={field.key}
+              id={field.text}
+              value={field.value}
+              onChange={field.valueChangeHandler}
+              onBlur={field.inputBlurHandler}
+            />
+          )}
 
-        {field.hasError && (
-          <div className='form-text text-danger'>{field.hasErrorMessage}</div>
-        )}
-      </div>
-    );
+          {field.hasError && (
+            <div className='form-text text-danger'>{field.hasErrorMessage}</div>
+          )}
+        </div>
+      );
   };
 
   return (
