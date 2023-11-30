@@ -19,6 +19,7 @@ import Stack from "@mui/material/Stack";
 import Skeleton from "@mui/material/Skeleton";
 import Map from "../../../components/Map/Map";
 import Icon from "../../../components/Icon/Icon";
+import Button from "../../../components/Button/Button";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -45,6 +46,7 @@ const Profile = () => {
   const [customerGroupName, setCustomerGroupName] = useState<string | null>();
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
   const [draggable, setDraggable] = useState<boolean>(false);
+  const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
 
   let userId: number | null = null;
   const { token, username } = useAppSelector((store) => store.user);
@@ -135,6 +137,8 @@ const Profile = () => {
   const submitHandler = () => {
     // if (isButtonDisabled) return;
 
+    setIsSubmiting(true);
+
     let request: CustomerProfileCollection = {};
 
     if (isMandatory("customerCode")) {
@@ -206,9 +210,8 @@ const Profile = () => {
     else request.longitude = 0;
 
     if (userId) {
-      setLoading(true);
       postCustomerProfile(userId, request)
-        .pipe(finalize(() => setLoading(false)))
+        .pipe(finalize(() => setIsSubmiting(false)))
         .subscribe({
           next: () => {
             if (userId && token)
@@ -592,16 +595,15 @@ const Profile = () => {
               )}
             </div>
 
-            <div className='col-12 mt-4 pb-4 border-top'>
-              <div className='d-flex'>
-                <button
-                  // disabled={isButtonDisabled}
-                  type='submit'
-                  className='btn btn-primary text-white rounded-3 mt-4'
-                  onClick={submitHandler}>
-                  ذخیره
-                </button>
-              </div>
+            <div className='col-12 text-center mt-4 pb-4 border-top'>
+              <Button
+                disabled={isButtonDisabled}
+                loading={isSubmiting}
+                type='submit'
+                label={"ذخیره"}
+                className='btn-primary text-white rounded-3 mt-4'
+                onClickHandler={submitHandler}
+              />
             </div>
           </div>
         </div>
