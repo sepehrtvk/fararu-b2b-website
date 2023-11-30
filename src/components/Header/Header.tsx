@@ -135,7 +135,7 @@ const Header = () => {
             </button>
 
             <DropDown
-              title='نام'
+              title='بیشتر'
               options={[
                 {
                   text: "پروفایل",
