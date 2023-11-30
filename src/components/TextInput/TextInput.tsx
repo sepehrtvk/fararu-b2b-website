@@ -4,7 +4,7 @@ import React, { ChangeEvent, HTMLInputTypeAttribute } from "react";
 export interface TextInputProps {
   label: string;
   placeholder?: string;
-  value?: string;
+  value?: string | number | undefined;
   type: HTMLInputTypeAttribute;
   valueChangeHandler?: (e: ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;

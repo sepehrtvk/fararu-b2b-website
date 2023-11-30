@@ -137,8 +137,6 @@ const Profile = () => {
   const submitHandler = () => {
     // if (isButtonDisabled) return;
 
-    setIsSubmiting(true);
-
     let request: CustomerProfileCollection = {};
 
     if (isMandatory("customerCode")) {
@@ -210,6 +208,8 @@ const Profile = () => {
     else request.longitude = 0;
 
     if (userId) {
+      setIsSubmiting(true);
+
       postCustomerProfile(userId, request)
         .pipe(finalize(() => setIsSubmiting(false)))
         .subscribe({
@@ -486,10 +486,10 @@ const Profile = () => {
               <div className='col-12 col-md-4 mb-4'>
                 <TextInput
                   disabled={!isMandatory("nationalCode")}
-                  type='text'
+                  type='number'
                   hasError={isMandatory("nationalCode")}
                   label={"کد ملی"}
-                  value={nationalCode ? nationalCode : ""}
+                  value={nationalCode ? +nationalCode : ""}
                   valueChangeHandler={(text) => {
                     setNationalCode(text.target.value);
                   }}
