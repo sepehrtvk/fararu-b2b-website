@@ -23,6 +23,7 @@ import {
 } from "../../api/product/types";
 import ProductGroupItem from "./ProductGroupItem/ProductGroupItem";
 import DropDown from "../DropDown/DropDown";
+import { getLastTwoLevels } from "../../common/arrays";
 
 const Header = () => {
   const [menu, setMenu] = useState(false);
@@ -39,21 +40,19 @@ const Header = () => {
     const subscription = getProductGroups().subscribe({
       next: (tree: ProductGroupModel[]) => {
         const productGroupTwoLevelTemp: ProductGroupTwoLevelModel[] = [];
+        const tempTree = getLastTwoLevels(tree);
 
-        if (tree[0].submenus) {
-          tree[0].submenus.map((row) => {
-            row.submenus?.map((sub) => {
-              const temp: ProductGroupTwoLevelModel = {
-                firstLevel: null,
-                secondLevel: [],
-              };
-              temp.firstLevel = sub;
-              if (sub.submenus) temp.secondLevel = sub.submenus;
-              productGroupTwoLevelTemp.push(temp);
-            });
-          });
-          setProductGroupTwoLevel(productGroupTwoLevelTemp);
-        }
+        tempTree.map((temptree: ProductGroupModel) => {
+          const temp: ProductGroupTwoLevelModel = {
+            firstLevel: null,
+            secondLevel: [],
+          };
+          temp.firstLevel = temptree;
+          if (temptree.submenus) temp.secondLevel = temptree.submenus;
+          productGroupTwoLevelTemp.push(temp);
+        });
+
+        setProductGroupTwoLevel(productGroupTwoLevelTemp);
       },
       error: () => {},
     });

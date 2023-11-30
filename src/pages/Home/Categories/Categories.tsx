@@ -11,6 +11,8 @@ import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import { finalize } from "rxjs";
 import { useNavigate } from "react-router-dom";
 import "./categories.css";
+import { getLastTwoLevels } from "../../../common/arrays";
+import Grid from "@mui/material/Grid";
 
 const Categories = () => {
   const [productGroupTwoLevel, setProductGroupTwoLevel] = useState<
@@ -27,23 +29,20 @@ const Categories = () => {
       .subscribe({
         next: (tree: ProductGroupModel[]) => {
           const productGroupTwoLevelTemp: ProductGroupTwoLevelModel[] = [];
-          if (tree[0].submenus) {
-            tree[0].submenus.map((row) => {
-              row.submenus?.map((sub) => {
-                const temp: ProductGroupTwoLevelModel = {
-                  firstLevel: null,
-                  secondLevel: [],
-                };
-                // if (sub.nLevel == 1) {
-                temp.firstLevel = sub;
-                if (sub.submenus) temp.secondLevel = sub.submenus;
-                //}
-                productGroupTwoLevelTemp.push(temp);
-              });
-            });
-            setProductGroupTwoLevel(productGroupTwoLevelTemp);
-            setActiveCategory(productGroupTwoLevelTemp[0].firstLevel?.id);
-          }
+          const tempTree = getLastTwoLevels(tree);
+
+          tempTree.map((temptree: ProductGroupModel) => {
+            const temp: ProductGroupTwoLevelModel = {
+              firstLevel: null,
+              secondLevel: [],
+            };
+            temp.firstLevel = temptree;
+            if (temptree.submenus) temp.secondLevel = temptree.submenus;
+            productGroupTwoLevelTemp.push(temp);
+          });
+
+          setProductGroupTwoLevel(productGroupTwoLevelTemp);
+          setActiveCategory(productGroupTwoLevelTemp[0].firstLevel?.id);
         },
         error: () => {},
       });
@@ -53,9 +52,14 @@ const Categories = () => {
   const renderFirstLevelTitle = () => {
     return productGroupTwoLevel.map((group) => {
       return (
-        <div
+        <Grid
+          item
+          xs={2}
+          sm={2}
+          md={2}
+          lg={2}
           key={group.firstLevel?.id}
-          className='mx-4'
+          className='text-center'
           style={{ cursor: "pointer" }}>
           <span
             className={
@@ -69,7 +73,7 @@ const Categories = () => {
             }}>
             {group.firstLevel?.title}
           </span>
-        </div>
+        </Grid>
       );
     });
   };
@@ -112,9 +116,14 @@ const Categories = () => {
           <h3 className='fw-bold me-2 mb-0'>دسته بندی محصولات</h3>
         </div>
       </div>
-      <div className='d-flex justify-content-center align-items-center mb-5'>
+      <Grid
+        justifyContent={"center"}
+        className='mb-5'
+        container
+        spacing={{ xs: 2, md: 4 }}
+        columns={{ xs: 12, sm: 12, md: 12 }}>
         {renderFirstLevelTitle()}
-      </div>
+      </Grid>
       <div className='d-flex justify-content-center align-items-center'>
         {renderFirstLevelItems()}
       </div>
