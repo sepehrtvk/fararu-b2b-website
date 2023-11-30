@@ -605,7 +605,7 @@ const Profile = () => {
               ) : (
                 <div className='col-12'>
                   <Stack justifyContent={"center"} alignItems={"center"}>
-                    <Skeleton variant='rounded' width={"90%"} height={300} />
+                    <Skeleton variant='rounded' width={"100%"} height={300} />
                   </Stack>
                 </div>
               )}
