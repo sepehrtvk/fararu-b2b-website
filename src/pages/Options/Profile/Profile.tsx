@@ -354,6 +354,16 @@ const Profile = () => {
               <div className='col-12 col-md-4 mb-4'>
                 {renderSkeleton("right")}
               </div>
+              <div className='col-12 mb-4'>
+                <Stack justifyContent={"center"} alignItems={"center"}>
+                  <Skeleton
+                    variant='rounded'
+                    width={"90%"}
+                    height={300}
+                    className='mb-4'
+                  />
+                </Stack>
+              </div>
             </div>
           </div>
         </div>
@@ -577,7 +587,7 @@ const Profile = () => {
             )}
 
             <div className='col-12'>
-              {lat && lng && (
+              {lat && lng ? (
                 <>
                   {renderButtonSection()}
                   <Map
@@ -592,6 +602,12 @@ const Profile = () => {
                     }}
                   />
                 </>
+              ) : (
+                <div className='col-12'>
+                  <Stack justifyContent={"center"} alignItems={"center"}>
+                    <Skeleton variant='rounded' width={"90%"} height={300} />
+                  </Stack>
+                </div>
               )}
             </div>
 
@@ -601,7 +617,7 @@ const Profile = () => {
                 loading={isSubmiting}
                 type='submit'
                 label={"ذخیره"}
-                className='btn-primary text-white rounded-3 mt-4'
+                className='btn-primary text-white rounded-3 mt-4 px-5'
                 onClickHandler={submitHandler}
               />
             </div>
