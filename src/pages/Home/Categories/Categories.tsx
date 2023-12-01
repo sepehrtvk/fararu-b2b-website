@@ -69,7 +69,11 @@ const Categories = () => {
                 : "text-info")
             }
             onClick={() => {
-              setActiveCategory(group.firstLevel?.id);
+              if (group.secondLevel?.length == 0) {
+                navigate("/shop", {
+                  state: { menuItemId: group.firstLevel?.id },
+                });
+              } else setActiveCategory(group.firstLevel?.id);
             }}>
             {group.firstLevel?.title}
           </span>
@@ -96,7 +100,11 @@ const Categories = () => {
             <img
               className='bg-light p-3 rounded-circle'
               width={"200px"}
-              src={item.imageUrl ? item.imageUrl : noImage}
+              src={
+                item.imageUrl && !item.imageUrl.includes("//content///")
+                  ? item.imageUrl
+                  : noImage
+              }
               alt={item.title}
             />
             <span className='mt-2'>{item.title}</span>

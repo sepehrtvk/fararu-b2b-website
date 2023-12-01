@@ -16,6 +16,11 @@ const ProductGroupItem = ({ productGroupTwoLevel }: ProductGroupItemProps) => {
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    if (productGroupTwoLevel.secondLevel?.length == 0) {
+      navigate("/shop", {
+        state: { menuItemId: productGroupTwoLevel.firstLevel?.id },
+      });
+    }
   };
   const handleClose = () => {
     setAnchorEl(null);

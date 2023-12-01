@@ -138,24 +138,28 @@ const Header = () => {
               options={[
                 {
                   text: "پروفایل",
+                  route: "profile",
                   onClick: () => {
                     navigate("/profile");
                   },
                 },
                 {
                   text: "کاردکس مشتری",
+                  route: "cardex",
                   onClick: () => {
                     navigate("/cardex");
                   },
                 },
                 {
                   text: "سابقه خرید",
+                  route: "orderHistory",
                   onClick: () => {
                     navigate("/orderHistory");
                   },
                 },
                 {
                   text: "خروج",
+                  route: "login",
                   onClick: () => {
                     dispatch(logout());
                     dispatch(clearCustomer());
