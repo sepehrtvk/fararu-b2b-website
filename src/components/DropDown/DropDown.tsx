@@ -6,7 +6,7 @@ import Icon from "../Icon/Icon";
 
 export interface DropDownProps {
   title: string;
-  options: { text: string; onClick: () => void }[];
+  options: { text: string; route: string; onClick: () => void }[];
 }
 
 const DropDown = ({ title, options }: DropDownProps) => {
@@ -45,7 +45,14 @@ const DropDown = ({ title, options }: DropDownProps) => {
           "aria-labelledby": "basic-button",
         }}>
         {options.map((opt) => (
-          <MenuItem key={opt.text} onClick={() => opt.onClick()}>
+          <MenuItem
+            selected={window.location.href.includes(opt.route)}
+            divider={opt.route == "orderHistory"}
+            key={opt.text}
+            onClick={() => {
+              opt.onClick();
+              handleClose();
+            }}>
             {opt.text}
           </MenuItem>
         ))}
