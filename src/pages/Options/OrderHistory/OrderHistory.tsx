@@ -18,11 +18,13 @@ import {
   toLocaleNumberString,
 } from "../../../common/Localization";
 import Button from "../../../components/Button/Button";
+import { Link, useNavigate } from "react-router-dom";
 
 const OrderHistory = () => {
   const [startDate, setStartDate] = useState<RangePickerType>(null);
   const [orders, setOrders] = useState<OrderHistoryModel[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getOrderHistory()
@@ -138,13 +140,11 @@ const OrderHistory = () => {
           {renderLabeledText("اضافه", toLocaleCurrencyString(item.addAmount))}
           {renderLabeledText("توضیحات", item.description)}
 
-          <Button
-            label={"مشاهده جزیات"}
-            className={"btn-primary text-white w-100"}
-            onClickHandler={() => {
-              console.log(item.orderId);
-            }}
-          />
+          <Link
+            className={"btn btn-primary text-white w-100 mb-2"}
+            to={"orderDetail/" + item.orderId}>
+            مشاهده جزیات
+          </Link>
         </div>
       </Grid>
     );

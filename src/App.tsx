@@ -19,6 +19,7 @@ import { useEffect } from "react";
 import { getPolGeneralConfig } from "./api/customer";
 import { setGeneralConfig } from "./store/slices/config";
 import notifyToast from "./components/toast/toast";
+import OrderDetail from "./pages/Options/OrderHistory/OrderDetail";
 
 function App() {
   const isLoggedIn = !!useAppSelector((store) => store.user.token);
@@ -59,8 +60,12 @@ function App() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/cardex' element={<Cardex />} />
           <Route path='/orderHistory' element={<OrderHistory />} />
+          <Route
+            path='/orderHistory/OrderDetail/:orderId'
+            element={<OrderDetail />}
+          />
           <Route path='/home' element={<Home />} />
-          <Route path='*' element={<Navigate to='/home' />} />
+          {/* <Route path='*' element={<Navigate to='/home' />} /> */}
         </Routes>
         <Footer />
       </>
