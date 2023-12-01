@@ -64,7 +64,7 @@ const AddToBasketButton = ({ product, unitInfo, batch }: AddButtonProps) => {
   if (basketItem === undefined || basketItem.qty == 0) {
     return (
       <button
-        className='btn btn-primary text-white'
+        className='btn btn-primary text-white w-100'
         onClick={() => {
           dispatch(
             updateBasketItem({
