@@ -90,7 +90,8 @@ export let theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          padding: 10,
+          paddingRight: 8,
+          paddingLeft: 8,
           marginTop: 5,
           borderRadius: 8,
         },
