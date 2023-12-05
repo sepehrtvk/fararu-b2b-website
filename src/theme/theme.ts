@@ -31,5 +31,54 @@ export let theme = createTheme({
     },
   },
 
-  components: {},
+  components: {
+    MuiTable: {
+      styleOverrides: {
+        root: {
+          tableLayout: "fixed",
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          "&.MuiTableCell-head": {
+            fontSize: fontSize[16],
+            fontWeight: "bold",
+            color: "#000",
+            padding: 0,
+            textAlign: "center",
+            paddingBottom: "16px",
+          },
+          "&.MuiTableCell-head:first-of-type": {
+            width: "75px",
+          },
+          "&.MuiTableCell-body": {
+            fontSize: fontSize[14],
+            color: "#343a40",
+            textAlign: "center",
+            padding: 0,
+            paddingBottom: "16px",
+            paddingTop: "16px",
+            paddingRight: "10px",
+            paddingLeft: "10px",
+          },
+          "&.MuiTableCell-body:first-of-type": {
+            fontSize: fontSize[14],
+            fontWeight: "bold",
+            color: "#000",
+          },
+        },
+      },
+    },
+    MuiPagination: {
+      styleOverrides: {
+        root: {
+          display: "flex",
+          justifyContent: "center",
+          marginTop: 10,
+        },
+      },
+    },
+  },
 });
