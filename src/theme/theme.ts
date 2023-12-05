@@ -80,5 +80,33 @@ export let theme = createTheme({
         },
       },
     },
+    MuiList: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          padding: 10,
+          marginTop: 5,
+          borderRadius: 8,
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          "&.MuiMenuItem-root:hover": {
+            borderRadius: 8,
+          },
+          "&.Mui-selected": {
+            borderRadius: 8,
+          },
+        },
+      },
+    },
   },
 });

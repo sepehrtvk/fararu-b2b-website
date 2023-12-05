@@ -139,6 +139,7 @@ const Header = () => {
                 {
                   text: "پروفایل",
                   route: "profile",
+                  iconName: "person",
                   onClick: () => {
                     navigate("/profile");
                   },
@@ -146,6 +147,8 @@ const Header = () => {
                 {
                   text: "کاردکس مشتری",
                   route: "cardex",
+                  iconName: "table",
+
                   onClick: () => {
                     navigate("/cardex");
                   },
@@ -153,6 +156,8 @@ const Header = () => {
                 {
                   text: "سابقه خرید",
                   route: "orderHistory",
+                  iconName: "cart",
+
                   onClick: () => {
                     navigate("/orderHistory");
                   },
@@ -160,6 +165,8 @@ const Header = () => {
                 {
                   text: "خروج",
                   route: "login",
+                  iconName: "box-arrow-in-right",
+
                   onClick: () => {
                     dispatch(logout());
                     dispatch(clearCustomer());

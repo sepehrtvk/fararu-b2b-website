@@ -3,10 +3,16 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Icon from "../Icon/Icon";
+import Divider from "@mui/material/Divider";
 
 export interface DropDownProps {
   title: string;
-  options: { text: string; route: string; onClick: () => void }[];
+  options: {
+    text: string;
+    route: string;
+    onClick: () => void;
+    iconName: string;
+  }[];
 }
 
 const DropDown = ({ title, options }: DropDownProps) => {
@@ -37,6 +43,7 @@ const DropDown = ({ title, options }: DropDownProps) => {
         />
       </button>
       <Menu
+        className='rounded-3'
         id='basic-menu'
         anchorEl={anchorEl}
         open={open}
@@ -45,16 +52,20 @@ const DropDown = ({ title, options }: DropDownProps) => {
           "aria-labelledby": "basic-button",
         }}>
         {options.map((opt) => (
-          <MenuItem
-            selected={window.location.href.includes(opt.route)}
-            divider={opt.route == "orderHistory"}
-            key={opt.text}
-            onClick={() => {
-              opt.onClick();
-              handleClose();
-            }}>
-            {opt.text}
-          </MenuItem>
+          <>
+            <MenuItem
+              className='my-2'
+              selected={window.location.href.includes(opt.route)}
+              key={opt.text}
+              onClick={() => {
+                opt.onClick();
+                handleClose();
+              }}>
+              <Icon name={opt.iconName} color={"text"} size={5} />
+              <span className='me-2'>{opt.text}</span>
+            </MenuItem>
+            {opt.route == "orderHistory" && <Divider className='bg-dark' />}
+          </>
         ))}
       </Menu>
     </div>
