@@ -10,6 +10,7 @@ import {
 import { Pagination } from "@mui/material";
 import TableProps from "./type";
 import Icon from "../Icon/Icon";
+import { Link } from "react-router-dom";
 
 const PAGE_SIZE = 10;
 
@@ -19,6 +20,8 @@ const TableComponenet = ({
   page,
   setPage,
   totalElements,
+  linkUrl,
+  excludeFields,
 }: TableProps) => {
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -34,6 +37,7 @@ const TableComponenet = ({
               {headers.map((header) => (
                 <TableCell key={header}>{header}</TableCell>
               ))}
+              {linkUrl && <TableCell>مشاهده جزیات</TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -44,9 +48,19 @@ const TableComponenet = ({
                   "&:last-child td, &:last-child th": { border: 0 },
                 }}>
                 <TableCell>{index + 1 + (page - 1) * PAGE_SIZE}</TableCell>
-                {Object.keys(item).map((binding, index) => (
-                  <TableCell key={index}>{item[binding]}</TableCell>
-                ))}
+                {Object.keys(item).map((binding, index) => {
+                  if (!excludeFields?.includes(binding))
+                    return <TableCell key={index}>{item[binding]}</TableCell>;
+                })}
+                {linkUrl && (
+                  <TableCell>
+                    <Link
+                      className={"btn btn-primary text-white"}
+                      to={linkUrl + item["orderId"]}>
+                      مشاهده جزیات
+                    </Link>
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>

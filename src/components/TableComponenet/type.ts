@@ -4,4 +4,6 @@ export default interface TableProps {
   page: number;
   setPage: (value: number) => void;
   totalElements: number;
+  linkUrl?: string;
+  excludeFields?: string[];
 }
