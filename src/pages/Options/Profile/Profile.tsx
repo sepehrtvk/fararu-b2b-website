@@ -260,7 +260,7 @@ const Profile = () => {
       );
     else
       return (
-        <Stack alignItems={"center"}>
+        <Stack className='bg-white rounded-3 py-4' alignItems={"center"}>
           <Stack
             flexDirection={"row"}
             alignItems={"center"}
@@ -279,13 +279,6 @@ const Profile = () => {
               />
             </div>
           </Stack>
-          <Skeleton
-            className='my-4'
-            variant='rounded'
-            width={210}
-            height={60}
-          />
-          <Skeleton variant='rounded' width={210} height={60} />
         </Stack>
       );
   };
@@ -336,33 +329,26 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div className='container my-5'>
-        <div className='row'>
-          <div className='col-md-4 col-12 py-4'>
-            <div className='d-flex flex-column justify-content-between align-items-center rounded-3 shadow-sm bg-white h-100 py-5 border'>
-              {renderSkeleton("left")}
-            </div>
-          </div>
-          <div className='col-md-8 col-12 py-4 mt-3 mt-md-0'>
-            <div className='row rounded-3 shadow-sm bg-white py-5 border'>
-              <div className='col-12 col-md-4 mb-4'>
-                {renderSkeleton("right")}
-              </div>
-              <div className='col-12 col-md-4 mb-4'>
-                {renderSkeleton("right")}
-              </div>
-              <div className='col-12 col-md-4 mb-4'>
-                {renderSkeleton("right")}
-              </div>
-              <div className='col-12 mb-4'>
-                <Stack justifyContent={"center"} alignItems={"center"}>
-                  <Skeleton
-                    variant='rounded'
-                    width={"90%"}
-                    height={300}
-                    className='mb-4'
-                  />
-                </Stack>
+      <div className='container-fluid bg-light3'>
+        <div className='container py-5'>
+          <div className='row'>
+            <div className='col-12'>{renderSkeleton("left")} </div>
+            <div className='col-12 mt-4'>
+              <div className='bg-white rounded-3 py-4'>
+                <div className='row'>
+                  <div className='col-12 col-md-3'>
+                    {renderSkeleton("right")}
+                  </div>
+                  <div className='col-12 col-md-3'>
+                    {renderSkeleton("right")}
+                  </div>
+                  <div className='col-12 col-md-3'>
+                    {renderSkeleton("right")}
+                  </div>
+                  <div className='col-12 col-md-3'>
+                    {renderSkeleton("right")}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -372,254 +358,255 @@ const Profile = () => {
   }
 
   return (
-    <div className='container my-5'>
-      <div className='row'>
-        <div className='col-md-4 col-12 py-4'>
-          <div className='d-flex flex-column justify-content-between align-items-center rounded-3 shadow-sm bg-white h-100 py-5 border'>
-            <div className='d-flex align-items-center'>
-              <div className='bg-light2 rounded-circle border border-2 p-3 ms-4'>
-                <img width={48} src={ProfileImage} alt='profile' />
-              </div>
+    <div className='container-fluid bg-light3'>
+      <div className='container py-5'>
+        <div className='row'>
+          <div className='col-12 py-4'>
+            <div className='row'>
+              <div className='d-flex justify-content-around align-items-center rounded-3  bg-white py-4 '>
+                <div className='d-flex align-items-center'>
+                  <div className='bg-light2 rounded-circle border border-2 p-3 ms-4'>
+                    <img width={48} src={ProfileImage} alt='profile' />
+                  </div>
 
-              {user && user.username && (
-                <div>
-                  <p className='fs-5 mb-1 fw-bold'>{alias}</p>
-                  <p className='fs-5 mb-0 fw-bold'>{user.username}</p>
+                  {user && user.username && (
+                    <div>
+                      <p className='fs-5 mb-1 fw-bold'>{alias}</p>
+                      <p className='fs-5 mb-0 fw-bold'>{user.username}</p>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-
-            {user && user.loginDate && (
-              <div className='mt-4'>
-                <p className='fs-6 mb-0'>
-                  {"تاریخ ورود" +
-                    " : " +
-                    toLocaleDateString(new Date(user.loginDate), {
-                      showDate: true,
-                      showTime: true,
-                    })}
-                </p>
+                {user && user.loginDate && (
+                  <p className='fs-6 mb-0'>
+                    {"تاریخ ورود" +
+                      " : " +
+                      toLocaleDateString(new Date(user.loginDate), {
+                        showDate: true,
+                        showTime: true,
+                      })}
+                  </p>
+                )}
               </div>
-            )}
-          </div>
-        </div>
-        <div className='col-md-8 col-12 py-4 mt-3 mt-md-0'>
-          <div className='row rounded-3 shadow-sm bg-white pt-5 border'>
-            <div className='col-12 col-md-4 mb-4'>
-              <TextInput
-                disabled
-                type='text'
-                label={"نام کاربری"}
-                value={alias ? alias : ""}
-              />
             </div>
-            {isShowable("mobileNo") && (
-              <div className='col-12 col-md-4 mb-4'>
+          </div>
+          <div className='col-12 py-4 mt-3 mt-md-0'>
+            <div className='row rounded-3 bg-white pt-5 '>
+              <div className='col-12 col-md-3 mb-4'>
                 <TextInput
                   disabled
                   type='text'
-                  label={"شماره موبایل"}
-                  value={username ? username : ""}
+                  label={"نام کاربری"}
+                  value={alias ? alias : ""}
                 />
               </div>
-            )}
-            {isShowable("customerCode") && (
-              <div className='col-12 col-md-4 mb-4'>
-                <TextInput
-                  disabled={!isMandatory("customerCode")}
-                  type='number'
-                  hasError={isMandatory("customerCode")}
-                  label={"کد مشتری"}
-                  value={customerCode?.toString()}
-                  valueChangeHandler={(text) => {
-                    setCustomerCode(
-                      text ? Number.parseInt(text.target.value, 10) : null
-                    );
-                  }}
-                />
-              </div>
-            )}
-            {isShowable("firstName") && (
-              <div className='col-12 col-md-4 mb-4'>
-                <TextInput
-                  disabled={!isMandatory("firstName")}
-                  type='text'
-                  hasError={isMandatory("firstName")}
-                  label={"نام"}
-                  value={firstName ? firstName : ""}
-                  valueChangeHandler={(text) => {
-                    setFirstName(text.target.value);
-                  }}
-                />
-              </div>
-            )}
-            {isShowable("lastName") && (
-              <div className='col-12 col-md-4 mb-4'>
-                <TextInput
-                  disabled={!isMandatory("lastName")}
-                  type='text'
-                  hasError={isMandatory("lastName")}
-                  label={"نام خانوادگی"}
-                  value={lastName ? lastName : ""}
-                  valueChangeHandler={(text) => {
-                    setLastName(text.target.value);
-                  }}
-                />
-              </div>
-            )}
-            {isShowable("storeName") && (
-              <div className='col-12 col-md-4 mb-4'>
-                <TextInput
-                  disabled={!isMandatory("storeName")}
-                  type='text'
-                  hasError={isMandatory("storeName")}
-                  label={"نام فروشگاه"}
-                  value={storeName ? storeName : ""}
-                  valueChangeHandler={(text) => {
-                    setStoreName(text.target.value);
-                  }}
-                />
-              </div>
-            )}
-
-            {isShowable("nationalCode") && (
-              <div className='col-12 col-md-4 mb-4'>
-                <TextInput
-                  disabled={!isMandatory("nationalCode")}
-                  type='number'
-                  hasError={isMandatory("nationalCode")}
-                  label={"کد ملی"}
-                  value={nationalCode ? +nationalCode : ""}
-                  valueChangeHandler={(text) => {
-                    setNationalCode(text.target.value);
-                  }}
-                />
-              </div>
-            )}
-
-            {isShowable("economicCode") && (
-              <div className='col-12 col-md-4 mb-4'>
-                <TextInput
-                  disabled={!isMandatory("economicCode")}
-                  type='text'
-                  hasError={isMandatory("economicCode")}
-                  label={"کد اقتصادی"}
-                  value={economicCode ? economicCode : ""}
-                  valueChangeHandler={(text) => {
-                    setEconomicCode(text.target.value);
-                  }}
-                />
-              </div>
-            )}
-            {isShowable("phoneNo") && (
-              <div className='col-12 col-md-4 mb-4'>
-                <TextInput
-                  disabled={!isMandatory("phoneNo")}
-                  type='text'
-                  hasError={isMandatory("phoneNo")}
-                  label={"شماره تلفن"}
-                  value={phoneNo ? phoneNo : ""}
-                  valueChangeHandler={(text) => {
-                    setPhoneNo(text.target.value);
-                  }}
-                />
-              </div>
-            )}
-            {isShowable("cityName") && (
-              <div className='col-12 col-md-4 mb-4'>
-                <TextInput
-                  disabled={!isMandatory("cityName")}
-                  type='text'
-                  hasError={isMandatory("cityName")}
-                  label={"شهر"}
-                  value={cityName ? cityName : ""}
-                  valueChangeHandler={(text) => {
-                    setCityName(text.target.value);
-                  }}
-                />
-              </div>
-            )}
-
-            {isShowable("stateName") && (
-              <div className='col-12 col-md-4 mb-4'>
-                <TextInput
-                  disabled={!isMandatory("stateName")}
-                  type='text'
-                  hasError={isMandatory("stateName")}
-                  label={"استان"}
-                  value={stateName ? stateName : ""}
-                  valueChangeHandler={(text) => {
-                    setStateName(text.target.value);
-                  }}
-                />
-              </div>
-            )}
-
-            {isShowable("postCode") && (
-              <div className='col-12 col-md-4 mb-4'>
-                <TextInput
-                  disabled={!isMandatory("postCode")}
-                  type='number'
-                  hasError={isMandatory("postCode")}
-                  label={"کد پستی"}
-                  value={postCode ? postCode : ""}
-                  valueChangeHandler={(text) => {
-                    setPostCode(text.target.value);
-                  }}
-                />
-              </div>
-            )}
-
-            {isShowable("address") && (
-              <div className='col-12 col-md-4 mb-4'>
-                <TextInput
-                  disabled={!isMandatory("address")}
-                  type='text'
-                  multiline
-                  hasError={isMandatory("address")}
-                  label={"آدرس"}
-                  value={address ? address : ""}
-                  valueChangeHandler={(text) => {
-                    setAddress(text.target.value);
-                  }}
-                />
-              </div>
-            )}
-
-            <div className='col-12'>
-              {lat && lng ? (
-                <>
-                  {renderButtonSection()}
-                  <Map
-                    draggable={draggable}
-                    customerCode={
-                      customerCode ? toLocaleNumberString(customerCode) : ""
-                    }
-                    center={[lat, lng]}
-                    getCurrentPosition={(latLng) => {
-                      setLat(latLng.lat);
-                      setLng(latLng.lng);
-                    }}
+              {isShowable("mobileNo") && (
+                <div className='col-12 col-md-3 mb-4'>
+                  <TextInput
+                    disabled
+                    type='text'
+                    label={"شماره موبایل"}
+                    value={username ? username : ""}
                   />
-                </>
-              ) : (
-                <div className='col-12'>
-                  <Stack justifyContent={"center"} alignItems={"center"}>
-                    <Skeleton variant='rounded' width={"100%"} height={300} />
-                  </Stack>
                 </div>
               )}
-            </div>
+              {isShowable("customerCode") && (
+                <div className='col-12 col-md-3 mb-4'>
+                  <TextInput
+                    disabled={!isMandatory("customerCode")}
+                    type='number'
+                    hasError={isMandatory("customerCode")}
+                    label={"کد مشتری"}
+                    value={customerCode?.toString()}
+                    valueChangeHandler={(text) => {
+                      setCustomerCode(
+                        text ? Number.parseInt(text.target.value, 10) : null
+                      );
+                    }}
+                  />
+                </div>
+              )}
+              {isShowable("firstName") && (
+                <div className='col-12 col-md-3 mb-4'>
+                  <TextInput
+                    disabled={!isMandatory("firstName")}
+                    type='text'
+                    hasError={isMandatory("firstName")}
+                    label={"نام"}
+                    value={firstName ? firstName : ""}
+                    valueChangeHandler={(text) => {
+                      setFirstName(text.target.value);
+                    }}
+                  />
+                </div>
+              )}
+              {isShowable("lastName") && (
+                <div className='col-12 col-md-3 mb-4'>
+                  <TextInput
+                    disabled={!isMandatory("lastName")}
+                    type='text'
+                    hasError={isMandatory("lastName")}
+                    label={"نام خانوادگی"}
+                    value={lastName ? lastName : ""}
+                    valueChangeHandler={(text) => {
+                      setLastName(text.target.value);
+                    }}
+                  />
+                </div>
+              )}
+              {isShowable("storeName") && (
+                <div className='col-12 col-md-3 mb-4'>
+                  <TextInput
+                    disabled={!isMandatory("storeName")}
+                    type='text'
+                    hasError={isMandatory("storeName")}
+                    label={"نام فروشگاه"}
+                    value={storeName ? storeName : ""}
+                    valueChangeHandler={(text) => {
+                      setStoreName(text.target.value);
+                    }}
+                  />
+                </div>
+              )}
 
-            <div className='col-12 text-center mt-4 pb-4 border-top'>
-              <Button
-                disabled={isButtonDisabled}
-                loading={isSubmiting}
-                type='submit'
-                label={"ذخیره"}
-                className='btn-primary text-white rounded-3 mt-4 px-5'
-                onClickHandler={submitHandler}
-              />
+              {isShowable("nationalCode") && (
+                <div className='col-12 col-md-3 mb-4'>
+                  <TextInput
+                    disabled={!isMandatory("nationalCode")}
+                    type='number'
+                    hasError={isMandatory("nationalCode")}
+                    label={"کد ملی"}
+                    value={nationalCode ? +nationalCode : ""}
+                    valueChangeHandler={(text) => {
+                      setNationalCode(text.target.value);
+                    }}
+                  />
+                </div>
+              )}
+
+              {isShowable("economicCode") && (
+                <div className='col-12 col-md-3 mb-4'>
+                  <TextInput
+                    disabled={!isMandatory("economicCode")}
+                    type='text'
+                    hasError={isMandatory("economicCode")}
+                    label={"کد اقتصادی"}
+                    value={economicCode ? economicCode : ""}
+                    valueChangeHandler={(text) => {
+                      setEconomicCode(text.target.value);
+                    }}
+                  />
+                </div>
+              )}
+              {isShowable("phoneNo") && (
+                <div className='col-12 col-md-3 mb-4'>
+                  <TextInput
+                    disabled={!isMandatory("phoneNo")}
+                    type='text'
+                    hasError={isMandatory("phoneNo")}
+                    label={"شماره تلفن"}
+                    value={phoneNo ? phoneNo : ""}
+                    valueChangeHandler={(text) => {
+                      setPhoneNo(text.target.value);
+                    }}
+                  />
+                </div>
+              )}
+              {isShowable("cityName") && (
+                <div className='col-12 col-md-3 mb-4'>
+                  <TextInput
+                    disabled={!isMandatory("cityName")}
+                    type='text'
+                    hasError={isMandatory("cityName")}
+                    label={"شهر"}
+                    value={cityName ? cityName : ""}
+                    valueChangeHandler={(text) => {
+                      setCityName(text.target.value);
+                    }}
+                  />
+                </div>
+              )}
+
+              {isShowable("stateName") && (
+                <div className='col-12 col-md-3 mb-4'>
+                  <TextInput
+                    disabled={!isMandatory("stateName")}
+                    type='text'
+                    hasError={isMandatory("stateName")}
+                    label={"استان"}
+                    value={stateName ? stateName : ""}
+                    valueChangeHandler={(text) => {
+                      setStateName(text.target.value);
+                    }}
+                  />
+                </div>
+              )}
+
+              {isShowable("postCode") && (
+                <div className='col-12 col-md-3 mb-4'>
+                  <TextInput
+                    disabled={!isMandatory("postCode")}
+                    type='number'
+                    hasError={isMandatory("postCode")}
+                    label={"کد پستی"}
+                    value={postCode ? postCode : ""}
+                    valueChangeHandler={(text) => {
+                      setPostCode(text.target.value);
+                    }}
+                  />
+                </div>
+              )}
+
+              {isShowable("address") && (
+                <div className='col-12 col-md-3 mb-4'>
+                  <TextInput
+                    disabled={!isMandatory("address")}
+                    type='text'
+                    multiline
+                    hasError={isMandatory("address")}
+                    label={"آدرس"}
+                    value={address ? address : ""}
+                    valueChangeHandler={(text) => {
+                      setAddress(text.target.value);
+                    }}
+                  />
+                </div>
+              )}
+
+              <div className='col-12'>
+                {lat && lng ? (
+                  <>
+                    {renderButtonSection()}
+                    <Map
+                      draggable={draggable}
+                      customerCode={
+                        customerCode ? toLocaleNumberString(customerCode) : ""
+                      }
+                      center={[lat, lng]}
+                      getCurrentPosition={(latLng) => {
+                        setLat(latLng.lat);
+                        setLng(latLng.lng);
+                      }}
+                    />
+                  </>
+                ) : (
+                  <div className='col-12'>
+                    <Stack justifyContent={"center"} alignItems={"center"}>
+                      <Skeleton variant='rounded' width={"100%"} height={300} />
+                    </Stack>
+                  </div>
+                )}
+              </div>
+
+              <div className='col-12 text-center mt-4 pb-4 border-top'>
+                <Button
+                  disabled={isButtonDisabled}
+                  loading={isSubmiting}
+                  type='submit'
+                  label={"ذخیره"}
+                  className='btn-primary text-white rounded-3 mt-4 px-5'
+                  onClickHandler={submitHandler}
+                />
+              </div>
             </div>
           </div>
         </div>
