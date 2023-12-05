@@ -37,7 +37,7 @@ const TableComponenet = ({
               {headers.map((header) => (
                 <TableCell key={header}>{header}</TableCell>
               ))}
-              {linkUrl && <TableCell>مشاهده جزیات</TableCell>}
+              {linkUrl && <TableCell>مشاهده جزئیات</TableCell>}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -55,9 +55,9 @@ const TableComponenet = ({
                 {linkUrl && (
                   <TableCell>
                     <Link
-                      className={"btn btn-primary text-white"}
+                      className={"btn btn-primary text-white p-2"}
                       to={linkUrl + item["orderId"]}>
-                      مشاهده جزیات
+                      <Icon name={"grid-3x2-gap"} color={"white"} size={5} />
                     </Link>
                   </TableCell>
                 )}

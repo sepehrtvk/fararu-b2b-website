@@ -83,7 +83,7 @@ const OrderDetail = () => {
           <div className='col-12 pb-4'>
             <div className='d-flex justify-content-center rounded-3 fw-bold bg-white py-4 fs-4'>
               <Icon name={"list-task"} color={"text"} size={2} />
-              <span className='me-3'>جزيبات سفارش</span>
+              <span className='me-3'>جزئیات سفارش</span>
             </div>
           </div>
           {details && details.length && !loading && (
