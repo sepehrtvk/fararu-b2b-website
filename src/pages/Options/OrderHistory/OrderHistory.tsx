@@ -20,6 +20,7 @@ import {
 import Button from "../../../components/Button/Button";
 import { Link, useNavigate } from "react-router-dom";
 import TableComponenet from "../../../components/TableComponenet";
+import OptionHeader from "../../../components/OptionHeader/OptionHeader";
 
 const headers: string[] = [
   "شماره پیگیری",
@@ -144,12 +145,11 @@ const OrderHistory = () => {
     <div className='container-fluid bg-light3'>
       <div className='container py-5'>
         <div className='row'>
-          <div className='col-12 pb-4'>
-            <div className='d-flex justify-content-center rounded-3 fw-bold bg-white py-4 fs-4'>
-              <Icon name={"cart"} color={"text"} size={2} />
-              <span className='me-3'>سابقه خرید</span>
-            </div>
-          </div>
+          <OptionHeader
+            title={"سابقه خرید"}
+            iconTitle={"cart"}
+            hideBackButton
+          />
           {orders && orders.length && !loading && (
             <div className='col-12'>
               <div className=' rounded-3 bg-white p-4'>

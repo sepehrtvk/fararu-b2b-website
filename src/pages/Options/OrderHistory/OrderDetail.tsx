@@ -11,6 +11,7 @@ import Grid from "@mui/material/Grid";
 import Icon from "../../../components/Icon/Icon";
 import { toLocaleCurrencyString } from "../../../common/Localization";
 import TableComponenet from "../../../components/TableComponenet";
+import OptionHeader from "../../../components/OptionHeader/OptionHeader";
 
 const headers: string[] = [
   "نام کالا",
@@ -76,16 +77,12 @@ const OrderDetail = () => {
       </div>
     );
   };
+
   return (
     <div className='container-fluid bg-light3'>
       <div className='container py-5'>
         <div className='row'>
-          <div className='col-12 pb-4'>
-            <div className='d-flex justify-content-center rounded-3 fw-bold bg-white py-4 fs-4'>
-              <Icon name={"list-task"} color={"text"} size={2} />
-              <span className='me-3'>جزئیات سفارش</span>
-            </div>
-          </div>
+          <OptionHeader title={"جزئیات سفارش"} iconTitle={"list-task"} />
           {details && details.length && !loading && (
             <div className='col-12'>
               <div className=' rounded-3 bg-white p-4'>

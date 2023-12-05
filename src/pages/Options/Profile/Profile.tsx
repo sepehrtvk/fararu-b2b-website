@@ -363,7 +363,7 @@ const Profile = () => {
         <div className='row'>
           <div className='col-12 py-4'>
             <div className='row'>
-              <div className='d-flex justify-content-around align-items-center rounded-3  bg-white py-4 '>
+              <div className='d-flex justify-content-start align-items-center rounded-3 bg-white p-4'>
                 <div className='d-flex align-items-center'>
                   <div className='bg-light2 rounded-circle border border-2 p-3 ms-4'>
                     <img width={48} src={ProfileImage} alt='profile' />
@@ -377,7 +377,7 @@ const Profile = () => {
                   )}
                 </div>
                 {user && user.loginDate && (
-                  <p className='fs-6 mb-0'>
+                  <p className='fs-6 mb-0 me-5'>
                     {"تاریخ ورود" +
                       " : " +
                       toLocaleDateString(new Date(user.loginDate), {
