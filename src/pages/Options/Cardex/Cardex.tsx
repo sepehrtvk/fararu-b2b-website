@@ -90,7 +90,7 @@ const Cardex = () => {
             iconTitle={"table"}
             hideBackButton
           />
-          {cardexes && cardexes.length && !loading && (
+          {cardexes && cardexes.length && !loading ? (
             <div className='col-12'>
               <div className=' rounded-3 bg-white p-4'>
                 <TableComponenet
@@ -102,7 +102,7 @@ const Cardex = () => {
                 />
               </div>
             </div>
-          )}
+          ) : null}
           {loading && <div>{renderSkeleton()}</div>}
           {cardexes.length == 0 && !loading && (
             <div className='col-12 py-4 mt-2 text-center'>

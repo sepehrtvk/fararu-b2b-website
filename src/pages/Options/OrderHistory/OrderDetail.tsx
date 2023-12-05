@@ -83,7 +83,7 @@ const OrderDetail = () => {
       <div className='container py-5'>
         <div className='row'>
           <OptionHeader title={"جزئیات سفارش"} iconTitle={"list-task"} />
-          {details && details.length && !loading && (
+          {details && details.length && !loading ? (
             <div className='col-12'>
               <div className=' rounded-3 bg-white p-4'>
                 <TableComponenet
@@ -95,7 +95,7 @@ const OrderDetail = () => {
                 />
               </div>
             </div>
-          )}
+          ) : null}
           {loading && <div>{renderSkeleton()}</div>}
           {details.length == 0 && !loading && (
             <div className='col-12 py-4 mt-2 text-center'>

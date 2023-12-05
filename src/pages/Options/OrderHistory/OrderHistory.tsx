@@ -233,7 +233,7 @@ const OrderHistory = () => {
             </div>
           </div>
 
-          {orders && orders.length && !loading && (
+          {orders && orders.length && !loading ? (
             <div className='col-12'>
               <div className=' rounded-3 bg-white p-4'>
                 <TableComponenet
@@ -247,7 +247,7 @@ const OrderHistory = () => {
                 />
               </div>
             </div>
-          )}
+          ) : null}
 
           {loading && <div>{renderSkeleton()}</div>}
           {orders.length == 0 && !loading && (

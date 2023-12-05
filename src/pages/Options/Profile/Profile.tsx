@@ -361,7 +361,7 @@ const Profile = () => {
     <div className='container-fluid bg-light3'>
       <div className='container py-5'>
         <div className='row'>
-          <div className='col-12 py-4'>
+          <div className='col-12'>
             <div className='row'>
               <div className='d-flex justify-content-start align-items-center rounded-3 bg-white p-4'>
                 <div className='d-flex align-items-center'>
@@ -389,8 +389,8 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div className='col-12 py-4 mt-3 mt-md-0'>
-            <div className='row rounded-3 bg-white pt-5 '>
+          <div className='col-12 py-4'>
+            <div className='row rounded-3 bg-white pt-4 '>
               <div className='col-12 col-md-3 mb-4'>
                 <TextInput
                   disabled
