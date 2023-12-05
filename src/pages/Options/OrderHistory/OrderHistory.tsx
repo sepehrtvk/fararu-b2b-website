@@ -62,6 +62,7 @@ const OrderHistory = () => {
           setOrders(data);
           const newData = mapDataAndChunk(data);
           setOrdersPage(newData);
+          setPage(1);
         },
         error: (err: AjaxError) => {
           if (err.response.message)
@@ -152,6 +153,7 @@ const OrderHistory = () => {
     const secondDate = startDate[1];
     if (!firstDate || !secondDate) return;
     setIsFiltered(true);
+    setPage(1);
 
     const tempOrders: OrderHistoryModel[] = [];
 
@@ -167,6 +169,7 @@ const OrderHistory = () => {
 
     setOrders(tempOrders);
     const newData = mapDataAndChunk(tempOrders);
+
     setOrdersPage(newData);
   };
 
@@ -198,6 +201,7 @@ const OrderHistory = () => {
                     maxDate={new DateObject()}
                     renderComponent={
                       <TextField
+                        disabled={isFiltered}
                         fullWidth
                         id='textInput'
                         type={"text"}
